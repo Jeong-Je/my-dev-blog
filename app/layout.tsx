@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="kr">
-      <body className={inter.className}>
+      <body className="mx-auto w-full md:w-2/3">
         <Nav />
         {children}
         <Footer />

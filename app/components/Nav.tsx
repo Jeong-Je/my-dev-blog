@@ -17,7 +17,7 @@ export default function Nav() {
     setHamburger(!hamburger);
   };
   return (
-    <nav className="fixed w-full h-24 shadow-xl bg-white">
+    <nav className="z-30 flex items-center justify-center h-24 shadow-xl bg-white">
       <div className="flex justify-between items-center h-full w-full px-4 2xl:px-16">
         {/* 로고 */}
         <Link href="/">

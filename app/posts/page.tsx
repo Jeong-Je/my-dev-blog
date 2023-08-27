@@ -22,7 +22,7 @@ export default function Home() {
   const posts = allPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
 
   return (
-    <div className="pt-40 mx-auto max-w-xl py-8">
+    <div className="ml-5 max-w-xl py-8">
       {posts.map((post, idx) => (
         <PostCard key={idx} {...post} />
       ))}
