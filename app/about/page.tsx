@@ -1,7 +1,7 @@
 export default function About() {
     return(
-        <>
-        about
-        </>
+    <div className='pt-24'>
+      about
+    </div>
     )
 }
