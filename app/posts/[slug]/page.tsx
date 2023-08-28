@@ -15,7 +15,7 @@ export const generateMetadata = ({ params }: { params: { slug: string } }) => {
 const PostLayout = ({ params }: { params: { slug: string } }) => {
   const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
   if (!post) throw new Error(`Post not found for slug: ${params.slug}`);
-
+  const tags = post.tags;
   const MDXContent = useMDXComponent(post.body.code);
   return (
     <article className="pt-24 mx-auto prose prose-a:bg-green-400 prose-a:no-underline prose-blockquote:border-l-emerald-400 max-sm:mx-5">
@@ -24,9 +24,12 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
         <time dateTime={post.date} className="ml-2 text-xs text-gray-600">
           {format(parseISO(post.date), "LLLL d, yyyy")}
         </time>
+        <br />
       </div>
-      {/* <div className="[&>*]:mb-3 [&>*:last-child]:mb-0" dangerouslySetInnerHTML={{ __html: post.body.html }} /> */}
       <MDXContent />
+      {tags?.map((tag, idx) => (
+              <button className="rounded-full border border-gary-500 bg-gray-200 text-black text-sm px-4 mr-2" key={idx}>{tag}</button>
+            ))}
     </article>
   );
 };
