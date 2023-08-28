@@ -8,17 +8,34 @@ import {
   AiOutlineGithub,
   AiOutlineMail,
 } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Nav() {
   const [hamburger, setHamburger] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
+
+  const handleScroll = () => {
+    if(window.scrollY > 0){
+      setScrolling(true);
+    }else{
+      setScrolling(false);
+    }
+  }
 
   const handleHamburger = () => {
     setHamburger(!hamburger);
   };
   return (
-    <nav className="z-30 flex items-center justify-center h-24 shadow-xl bg-white">
-      <div className="flex justify-between items-center h-full w-full px-4 2xl:px-16">
+    <nav className={`fixed left-0 right-0 flex items-center justify-center h-24 bg-white transition-shadow duration-1000 ${scrolling ? 'shadow-xl' : 'shadow-none'}`}>
+      <div className="max-w-[650px] flex justify-between items-center h-full w-full px-0">
         {/* 로고 */}
         <Link href="/">
           <Image

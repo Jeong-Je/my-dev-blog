@@ -4,7 +4,7 @@ import { allPosts, Post } from 'contentlayer/generated'
 
 function PostCard(post: Post) {
   return (
-    <div className="mb-8">
+    <div className="mb-8 prose">
       <h2 className="mb-1 text-xl">
         <Link href={post.url} className="text-blue-700 hover:text-blue-900 dark:text-blue-400">
           {post.title}
@@ -22,7 +22,7 @@ export default function Home() {
   const posts = allPosts.sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
 
   return (
-    <div className="ml-5 max-w-xl py-8">
+    <div className="pt-24 py-8 w-[650px] mx-auto">
       {posts.map((post, idx) => (
         <PostCard key={idx} {...post} />
       ))}

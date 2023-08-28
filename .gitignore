@@ -36,6 +36,3 @@ next-env.d.ts
 
 # contentlayer
 .contentlayer
-
-#MDX files
-/posts

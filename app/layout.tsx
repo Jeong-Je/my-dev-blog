@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="kr">
-      <body className="mx-auto w-full md:w-2/3">
+      <body className={`${inter.className}`}>
         <Nav />
         {children}
         <Footer />
@@ -26,3 +26,4 @@ export default function RootLayout({
     </html>
   );
 }
+
