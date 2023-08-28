@@ -34,7 +34,7 @@ export default function Nav() {
     setHamburger(!hamburger);
   };
   return (
-    <nav className={`fixed left-0 right-0 flex items-center justify-center h-24 bg-white transition-shadow duration-1000  ${scrolling ? 'shadow-xl' : 'shadow-none'}`} >
+    <nav className={`fixed left-0 right-0 flex items-center justify-center h-24 bg-white transition-shadow duration-500  ${scrolling ? 'shadow-xl' : 'shadow-none'}`} >
       <div className="max-w-[650px] flex justify-between items-center h-full w-full px-0">
         {/* 로고 */}
         <Link href="/">
