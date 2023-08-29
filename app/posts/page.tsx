@@ -1,18 +1,20 @@
+"use client";
 import Link from "next/link";
 import { compareDesc, format, parseISO } from "date-fns";
 import { allPosts, Post } from "contentlayer/generated";
+import { useSearchParams } from "next/navigation";
 
 function PostCard(post: Post) {
   return (
-    <div className="mb-8 prose max-sm:mx-5">
+    <div className="py-8 border rounded-lg mx-auto mb-8 prose max-sm:mx-5">
       <Link
         href={post.url}
         className="text-black no-underline hover:font-bold dark:text-blue-400"
       >
-        <h2 className="mb-1 text-xl">{post.title}</h2>
-        <time dateTime={post.date} className="mb-2 block text-xs text-gray-600">
-          {format(parseISO(post.date), "LLLL d, yyyy")}
+        <time dateTime={post.date} className="block text-xs text-gray-600">
+          {format(parseISO(post.date), "yyyy년 MM월 dd일")}
         </time>
+        <h2 className="my-0 text-xl text-sky-400">{post.title}</h2>
         <div
           className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0"
           dangerouslySetInnerHTML={{ __html: post.description }}
@@ -21,7 +23,7 @@ function PostCard(post: Post) {
       <div>
         {post.tags?.map((tag, idx) => (
           <Link href={`/posts/?tag=${tag}`} key={idx}>
-            <button className="rounded-full border border-gary-500 bg-gray-200 hover:bg-gray-400 text-black text-xs px-4 mr-2">
+            <button className="mt-px rounded-full border border-sky-100 hover:border-sky-200 outline outline-sky-100 hover:outline-sky-200 bg-sky-100 hover:bg-sky-200 text-black text-xs px-4 mr-3">
               {tag}
             </button>
           </Link>
@@ -32,15 +34,63 @@ function PostCard(post: Post) {
 }
 
 export default function Home() {
-  const posts = allPosts.sort((a, b) =>
+  const searchParams = useSearchParams();
+  const tagFilter = searchParams.get("tag");
+
+  let filteredPosts;
+  if (tagFilter) {
+    filteredPosts = allPosts.filter((p) => p.tags?.includes(tagFilter));
+  } else {
+    filteredPosts = allPosts;
+  }
+
+  const posts = filteredPosts.sort((a, b) =>
     compareDesc(new Date(a.date), new Date(b.date))
   );
-  console.log(posts[2].tags);
+
+  let allTags: Array<string> = [];
+  allPosts.map((post) => {
+    if (post.tags) {
+      allTags.push(...post.tags); // 태그 배열을 추가
+    }
+  });
+
+  //allTags의 중복 값들 제거
+  const tags = allTags.filter((v, i) => allTags.indexOf(v) === i);
+
   return (
-    <div className="pt-24 py-8 w-[650px] mx-auto">
-      {posts.map((post, idx) => (
-        <PostCard key={idx} {...post} />
-      ))}
-    </div>
+    <>
+      <div className="pt-32 mx-auto">
+        <div className="flex overflow-auto prose mx-auto mb-8 max-sm:mx-5">
+          <Link href="/posts">
+            <button
+              className={`ml-1 rounded-full border border-sky-200 hover:border-sky-300 outline outline-sky-200 hover:outline-sky-300 bg-sky-200 hover:bg-sky-300 text-black text-sm px-4 mr-3 ${
+                tagFilter === null
+                  ? "bg-sky-400 outline-sky-400 border-sky-400"
+                  : ""
+              }`}
+            >
+              ALL
+            </button>
+          </Link>
+          {tags.map((tag, idx) => (
+            <Link href={`/posts/?tag=${tag}`} key={idx}>
+              <button
+                className={`rounded-full border border-sky-200 hover:border-sky-300 outline outline-sky-200 hover:outline-sky-300 bg-sky-200 hover:bg-sky-300 text-black text-sm px-4 mr-3 whitespace-nowrap ${
+                  tag === tagFilter
+                    ? "bg-sky-400 outline-sky-400 border-sky-400"
+                    : ""
+                }`}
+              >
+                {tag}
+              </button>
+            </Link>
+          ))}
+        </div>
+        {posts.map((post, idx) => (
+          <PostCard key={idx} {...post} />
+        ))}
+      </div>
+    </>
   );
 }
