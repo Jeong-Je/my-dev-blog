@@ -21,18 +21,18 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
   return (
     <>
       {/* 본문 (추후 구조 수정 필요) */}
-      <article className="pt-24 mx-auto prose prose-a:bg-green-400 prose-a:no-underline prose-blockquote:border-l-emerald-400 max-sm:mx-5">
+      <div className="pt-24 mx-auto prose prose-a:no-underline max-sm:mx-5">
         <div className="flex">
-          <h1 className="pt-5 pb-0 text-4xl font-bold">
+          <h1 className="pt-5 pb-0 text-4xl font-bold text-sky-400">
             {post.title}
-            <time dateTime={post.date} className="ml-2 text-xs text-gray-400">
-              {format(parseISO(post.date), "LLLL d, yyyy")}
+            <time dateTime={post.date} className="ml-2 text-sm text-sky-300 ">
+              {format(parseISO(post.date), "yyyy년 MM월 dd일")}
             </time>
             <div className="prose-a:bg-white">
           {tags?.map((tag, idx) => (
             <Link href={`/posts/?tag=${tag}`}>
               <button
-                className="rounded-full border border-gary-500 bg-gray-200 hover:bg-gray-400 text-black text-sm px-4 mr-2"
+                className="rounded-full border border-sky-200 hover:border-sky-200 outline outline-sky-200 bg-sky-200 hover:bg-sky-300 text-black text-sm px-4 mr-3"
                 key={idx}
               >
                 {tag}
@@ -42,8 +42,10 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
         </div>
           </h1>
         </div>
+        <article className="prose-a:bg-sky-400 prose-blockquote:border-l-sky-400">
         <MDXContent />
-      </article>
+        </article>
+      </div>
     </>
   );
 };
