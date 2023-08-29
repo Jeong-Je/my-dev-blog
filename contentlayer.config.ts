@@ -10,8 +10,8 @@ export const Post = defineDocumentType(() => ({
   fields: {
     title: { type: 'string', required: true },
     date: { type: 'date', required: true },
-    description: {type: 'string', required: true},
     tags: {type: 'list', of: {type: 'string'}},
+    description: {type: 'string', required: true},
   },
   computedFields: {
     url: { type: 'string', resolve: (post) => `/posts/${post._raw.flattenedPath}` },
