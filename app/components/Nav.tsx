@@ -58,14 +58,11 @@ export default function Nav() {
           {/* 네비게이션 */}
           <div className="hidden sm:flex">
             <ul className="hidden sm:flex">
-              <li className="ml-10 uppercase hover:border-b-2 hover:border-sky-400 text-sky-400 text-xl">
+              <li className="ml-10 uppercase ease-in duration-200 hover:text-2xl text-sky-400 text-xl">
                 <Link href="/">Home</Link>
               </li>
-              <li className="ml-10 uppercase hover:border-b-2 hover:border-sky-400 text-sky-400 text-xl">
+              <li className="ml-10 mr-1 uppercase ease-in duration-200 hover:text-2xl text-sky-400 text-xl">
                 <Link href="/posts">Posts</Link>
-              </li>
-              <li className="mx-10 uppercase hover:border-b-2 hover:border-sky-400 text-sky-400 text-xl">
-                <Link href="/about">About</Link>
               </li>
             </ul>
           </div>
@@ -105,12 +102,6 @@ export default function Nav() {
                 className="py-4 cursor-pointer"
               >
                 <Link href="/posts" className="text-sky-400">Posts</Link>
-              </li>
-              <li
-                onClick={() => setHamburger(false)}
-                className="py-4 cursor-pointer"
-              >
-                <Link href="/about" className="text-sky-400">About</Link>
               </li>
             </ul>
           </div>
