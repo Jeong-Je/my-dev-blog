@@ -1,8 +1,6 @@
-"use client";
 import Link from "next/link";
 import { compareDesc, format, parseISO } from "date-fns";
 import { allPosts, Post } from "contentlayer/generated";
-import { useSearchParams } from "next/navigation";
 
 function PostCard(post: Post) {
   return (
@@ -33,15 +31,18 @@ function PostCard(post: Post) {
   );
 }
 
-export default function Home() {
-  const searchParams = useSearchParams();
-  const tagFilter = searchParams.get("tag");
+export default function Home({
+  searchParams,
+}: {
+  searchParams: any;
+}) {
+  console.log(searchParams);
 
   let filteredPosts;
-  if (tagFilter) {
-    filteredPosts = allPosts.filter((p) => p.tags?.includes(tagFilter));
-  } else {
+  if (Object.keys(searchParams).length === 0) {
     filteredPosts = allPosts;
+  } else {
+    filteredPosts = allPosts.filter((p) => p.tags?.includes(searchParams?.tag));
   }
 
   const posts = filteredPosts.sort((a, b) =>
@@ -65,7 +66,7 @@ export default function Home() {
           <Link href="/posts">
             <button
               className={`ml-1 rounded-full border border-sky-200 hover:border-sky-300 outline outline-sky-200 hover:outline-sky-300 bg-sky-200 hover:bg-sky-300 text-black text-sm px-4 mr-3 ${
-                tagFilter === null
+                searchParams === undefined
                   ? "bg-sky-400 outline-sky-400 border-sky-400"
                   : ""
               }`}
@@ -77,7 +78,7 @@ export default function Home() {
             <Link href={`/posts/?tag=${tag}`} key={idx}>
               <button
                 className={`rounded-full border border-sky-200 hover:border-sky-300 outline outline-sky-200 hover:outline-sky-300 bg-sky-200 hover:bg-sky-300 text-black text-sm px-4 mr-3 whitespace-nowrap ${
-                  tag === tagFilter
+                  tag === searchParams?.tag
                     ? "bg-sky-400 outline-sky-400 border-sky-400"
                     : ""
                 }`}
