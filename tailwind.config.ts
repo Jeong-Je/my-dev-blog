@@ -13,6 +13,37 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            'blockquote p:first-of-type::before': {
+              content: "''",
+            },
+            'a':{
+
+            },
+            'img': {
+              margin: '24px 0px',
+              width: "650px",
+              borderRadius: "0.5rem",
+            },
+            'h2':{
+              marginTop: '0',
+            },
+            'code::before': {
+              content: "''",
+            },
+            'code::after': {
+              content: "''",
+            },
+            'code': {
+              'padding': '5px',
+              'backgroundColor': '#e5e7eb',
+              'borderRadius': "0.5rem",
+            },
+          }
+        }
+      }
     },
   },
   plugins: [

@@ -21,7 +21,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
   return (
     <>
       {/* 본문 (추후 구조 수정 필요) */}
-      <div className="pt-24 mx-auto prose prose-a:no-underline max-sm:mx-5">
+      <div className="pt-24 mx-auto prose max-sm:mx-5">
         <div className="flex">
           <h1 className="pt-5 pb-0 text-4xl font-bold">
             {post.title}
@@ -39,7 +39,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
             </div>
           </h1>
         </div>
-        <article className="prose-a:bg-sky-400 prose-blockquote:border-l-sky-400">
+        <article className="prose-hr:my-5 prose-a:text-sky-400 prose-a:underline-sky-500 prose-blockquote:border-l-sky-400">
           <MDXContent />
         </article>
       </div>

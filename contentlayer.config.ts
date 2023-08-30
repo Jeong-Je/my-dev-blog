@@ -27,12 +27,12 @@ const contentSourced = makeSource({
       [
         rehypePrettyCode,
         {
-          theme: 'one-dark-pro',
+          dark: 'github-dark-dimmed',
+          light: 'github-light',
         },
       ],
       highlight,
     ]
   }
 })
-
 export default contentSourced;
