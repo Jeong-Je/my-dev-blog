@@ -10,6 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "JeongJe-Blog",
   description: "JeongJe의 개인 블로그입니다.",
+  themeColor: "#2196f3",
 };
 
 export default function RootLayout({
