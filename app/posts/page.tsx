@@ -4,39 +4,30 @@ import { allPosts, Post } from "contentlayer/generated";
 
 function PostCard(post: Post) {
   return (
-    <div className="py-8 border rounded-lg mx-auto mb-8 prose max-sm:mx-5">
-      <Link
-        href={post.url}
-        className="text-black no-underline hover:font-bold dark:text-blue-400"
-      >
-        <time dateTime={post.date} className="block text-xs text-gray-600">
-          {format(parseISO(post.date), "yyyy년 MM월 dd일")}
-        </time>
-        <h2 className="my-0 text-xl text-sky-400">{post.title}</h2>
-        <div
-          className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0"
-          dangerouslySetInnerHTML={{ __html: post.description }}
-        />
-      </Link>
-      <div>
-        {post.tags?.map((tag, idx) => (
-          <Link href={`/posts/?tag=${tag}`} key={idx}>
-            <button className="mt-px rounded-full border border-sky-100 hover:border-sky-200 outline outline-sky-100 hover:outline-sky-200 bg-sky-100 hover:bg-sky-200 text-black text-xs px-4 mr-3">
-              {tag}
-            </button>
-          </Link>
-        ))}
+    <Link href={post.url} className="text-black no-underline">
+      <div className="py-8 bg-gray-200 border rounded-lg mx-auto mb-8 prose max-sm:mx-5">
+        <div className="px-5">
+          <time dateTime={post.date} className="block text-sm">
+            {format(parseISO(post.date), "yyyy년 MM월 dd일")}
+          </time>
+          <h2 className="my-1 text-xl font-bold">{post.title}</h2>
+          <div
+            className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0"
+            dangerouslySetInnerHTML={{ __html: post.description }}
+          />
+          {post.tags?.map((tag, idx) => (
+            <span key={idx} className="pt-3 pr-4 no-underline text-sky-500">
+              #{tag}
+            </span>
+          ))}
+        </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
-export default function Home({
-  searchParams,
-}: {
-  searchParams: any;
-}) {
-  console.log(searchParams);
+export default function Home({ searchParams }: { searchParams: any }) {
+  // console.log(searchParams);
 
   let filteredPosts;
   if (Object.keys(searchParams).length === 0) {
@@ -66,7 +57,7 @@ export default function Home({
           <Link href="/posts">
             <button
               className={`ml-1 rounded-full border border-sky-200 hover:border-sky-300 outline outline-sky-200 hover:outline-sky-300 bg-sky-200 hover:bg-sky-300 text-black text-sm px-4 mr-3 ${
-                searchParams === undefined
+                Object.keys(searchParams).length === 0
                   ? "bg-sky-400 outline-sky-400 border-sky-400"
                   : ""
               }`}

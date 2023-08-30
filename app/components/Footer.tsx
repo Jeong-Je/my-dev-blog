@@ -7,7 +7,7 @@ import {
 export default function Footer() {
   const style = {color:"#38bdf8"}
   return (
-    <footer className="max-w-[650px] max-sm:max-w-[90%] mx-auto  bottom-0 bg-white rounded-lg shadow m-4">
+    <footer className="max-w-[650px] max-sm:max-w-[90%] mx-auto  bottom-0 bg-gray-200 rounded-lg shadow m-4">
       <div className="max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
           © 2023{" "}

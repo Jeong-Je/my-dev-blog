@@ -23,12 +23,12 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
       {/* 본문 (추후 구조 수정 필요) */}
       <div className="pt-24 mx-auto prose prose-a:no-underline max-sm:mx-5">
         <div className="flex">
-          <h1 className="pt-5 pb-0 text-4xl font-bold text-sky-400">
+          <h1 className="pt-5 pb-0 text-4xl font-bold">
             {post.title}
-            <time dateTime={post.date} className="ml-2 text-sm text-sky-300 ">
+            <time dateTime={post.date} className="ml-2 text-sm text-zinc-400 ">
               {format(parseISO(post.date), "yyyy년 MM월 dd일")}
             </time>
-            <div className="prose-a:bg-white">
+            <div className="prose-a:bg-gray-100">
               {tags?.map((tag, idx) => (
                 <Link href={`/posts/?tag=${tag}`} key={idx}>
                   <button className="rounded-full border border-sky-200 hover:border-sky-200 outline outline-sky-200 bg-sky-200 hover:bg-sky-300 text-black text-sm px-4 mr-3">

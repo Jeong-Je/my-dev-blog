@@ -58,10 +58,10 @@ export default function Nav() {
           {/* 네비게이션 */}
           <div className="hidden sm:flex">
             <ul className="hidden sm:flex">
-              <li className="ml-10 uppercase ease-in duration-200 hover:text-2xl text-sky-400 text-xl">
+              <li className="ml-10 uppercase ease-in duration-200 hover:text-2xl text-sky-500 text-xl">
                 <Link href="/">Home</Link>
               </li>
-              <li className="ml-10 mr-1 uppercase ease-in duration-200 hover:text-2xl text-sky-400 text-xl">
+              <li className="ml-10 mr-1 uppercase ease-in duration-200 hover:text-2xl text-sky-500 text-xl">
                 <Link href="/posts">Posts</Link>
               </li>
             </ul>
