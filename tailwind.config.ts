@@ -37,7 +37,7 @@ const config: Config = {
               content: "''",
             },
             'code': {
-              'padding': '5px',
+              'padding': '3px',
               'backgroundColor': '#e5e7eb',
               'borderRadius': "0.5rem",
             },
