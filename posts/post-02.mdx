@@ -1,0 +1,216 @@
+---
+title: "[NestJS] nodemailer로 이메일 인증 구현하기"
+date: 2023-08-31
+tags:
+- NestJS
+description: Nest.js와 nodemailer로 이메일 인증을 구현하는 방법을 정리한 포스트입니다.
+---
+
+> [NestJS](https://nestjs.com/)와 [nodemailer](https://nodemailer.com/)로 이메일 인증을 구현하는 방법입니다.
+***
+
+먼저 `Nest CLI`로 프로젝트를 생성해줍니다.
+```
+npm i -g @nestjs/cli
+nest new email-verification
+```
+
+프로젝트 폴더로 이동한 후 nodemailer 모듈을 설치해줍니다.
+```
+npm i @nestjs-modules/mailer nodemailer
+npm i --save-dev @types/nodemailer
+```
+
+다음으로 `hbs`파일을 사용하기 위해서 `handlebars`와 `hbs`를 설치해줍니다.
+```
+npm i hbs handlebars
+```
+`app.module.ts`파일에 가서 `MailerModule`를 추가해줍니다.
+
+```ts
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { MailerModule } from '@nestjs-modules/mailer';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+
+@Module({
+  imports: [
+    MailerModule.forRoot({
+      transport: {
+        host: 'smtp.gmail.com',
+        port: 587,
+        auth: {
+          user: // 이메일 송신지 입력,
+          pass: // 앱 비밀번호 입력,
+        },
+      },
+      defaults: {
+        from: '"nest-modules" <modules@nestjs.com>',
+      },
+      template: {
+        dir: __dirname + '/templates/',
+        adapter: new HandlebarsAdapter(),
+        options: {
+          strict: true,
+        },
+      },
+    }),
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+
+```
+
+auth 부분의 user에 이메일을 보낼 송신지 이메일을 입력하시고 pass 부분에 앱 비밀번호를 입력합니다.
+앱 비밀번호를 발급받는 방법은 [이곳](https://support.google.com/accounts/answer/185833?hl=ko)에서 확인할 수 있습니다. (저는 gmail을 사용했습니다.)
+user과 pass는 하드코딩할 경우 이메일과 비밀번호과 유출될 수 있으므로 [@nest/cofing](https://docs.nestjs.com/techniques/configuration)의
+환경변수(env)를 이용해서 넣어줍니다.
+
+`'/' 요청`의 페이지를 만들기 위해 루트 폴더 밑에 `views` 폴더를 생성한 후 안에 `index.hbs` 파일을 생성해줍니다.
+
+```html
+<form action='/' method='post'>
+  <p><input type='email' name='email' placeholder='이메일 입력' required /></p>
+  <button type='submit'>인증번호 보내기</button>
+</form>
+```
+`index.hbs`파일을 불러오기 위해 `main.ts`에 다음 코드를 넣어줍니다.
+```ts
+//main.ts
+import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('hbs');
+
+  await app.listen(3000);
+}
+bootstrap();
+
+```
+
+다음으로 `controller`에 `index.hbs` 파일을 렌더링 하기 위한 코드를 만듭니다.
+```ts
+//app.controller.ts
+import { Get, Controller, Render, Post, Body } from '@nestjs/common';
+import { AppService } from './app.service';
+
+@Controller()
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get('/')
+  @Render('index')
+  root() {
+    return {};
+  }
+}
+
+```
+등록한 후 `http://localhost:3000/`에 접속하시면 다음과 같이
+`index.hbs` 파일이 렌더링됩니다.
+![Imgur](https://imgur.com/ZaVJ6Ca.png)
+
+이제 이메일을 입력하고 인증번호 보내기 버튼을 눌렀을때 인증번호와 함께 이메일을 보내는 코드를 만듭니다.
+`controller`와 `service`에 다음 코드를 입력합니다.
+```ts
+//app.controller.ts
+import { Get, Controller, Render, Post, Body } from '@nestjs/common';
+import { AppService } from './app.service';
+
+@Controller()
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get('/')
+  @Render('index')
+  root() {
+    return {};
+  }
+
+  @Post('/')
+  async sendCode(@Body('email') userEmail: string): Promise<boolean> {
+    return this.appService.sendCode(userEmail);
+  }
+}
+
+```
+```ts
+//app.service.ts
+import { Injectable, ConflictException } from '@nestjs/common';
+import { MailerService } from '@nestjs-modules/mailer/dist';
+import * as crypto from 'crypto';
+
+@Injectable()
+export class AppService {
+  constructor(private readonly mailerService: MailerService) {}
+
+  sendCode(userEmail: string): boolean {
+    //6자리 인증코드 생성
+    const authCode = crypto.randomBytes(3).toString('hex');
+    console.log(`발송대기`);
+    this.mailerService
+      .sendMail({
+        to: 'fomm12@naver.com',
+        from: 'jeongjeson656@gmail.com',
+        subject: 'Hello', //이메일 제목입력
+        template: 'email', //templates 폴더 안에 있는 hbs 파일명 입력
+        context: {
+          userEmail,
+          authCode,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        new ConflictException(err);
+      });
+    return true;
+  }
+}
+```
+인증번호는 보안을 위해서 랜덤한 문자를 생성하여 보냅니다. 자바스크립트에서는 난수를 만드는 법으로 `Math.random()` 함수를
+지원하지만 완벽한 난수가 아니여서 보안상 문제가 있을 수 있습니다. 따라서 안전한 `crypto`로 난수를 만드는 것을 추천합니다.
+
+이제 이메일 내용에 들어갈 템플릿을 만들겠습니다.
+`src`폴더 안에 `templates` 폴더를 만들고 안에 `email.hbs` 파일을 만듭니다.
+```html
+<h1>{{userEmail}}님 반갑습니다.</h1>
+<p>인증번호는 [{{authCode}}] 입니다.</p>
+```
+ejs에서는 변수를 넣을려면 `<%= userEmail %>`같이 넣어야 돼서 귀찮은데 hbs는 간단해서 맘에듭니다.
+
+여기서 이제 이메일을 보내면 다음과 같이 인증번호와 함께 이메일이 잘 발송됩니다.
+![Imgur](https://imgur.com/ifM1EiG.png)
+
+갑자기 dist폴더에서 hbs을 못찾는 오류가 발생하여 몇시간 삽질을 하다가 [깃허브 이슈](https://github.com/nest-modules/mailer/issues/494)에서 해결법을 찾았습니다. `nest-cli.json` 파일의 `compilerOptions`에 다음과
+같은 코드를 추가하시고 서버를 껐다가 다시 시작하시면 해결이 됩니다.
+```json
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "assets": [
+      {
+        "include": "**/*.hbs",
+        "watchAssets": true
+      }
+    ],
+    "deleteOutDir": true
+  }
+}
+
+```
+
+인증을 실제로 한다면
+생성된 인증번호를 DB나 세션에 저장해두어 유저가 입력한 인증번호와 비교하여 인증 성공/인증 실패 를 나눕니다.
