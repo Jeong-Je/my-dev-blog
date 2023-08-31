@@ -6,13 +6,15 @@ tags:
 description: Next.js13과 Contentlayer을 이용하여 블로그 만드는 법을 정리한 포스트입니다.
 ---
 
-Next.js13과 Contentlayer을 이용하여 개인 블로그를 만들어 보겠습니다.
+Next.js13과 Contentlayer을 이용하여 개인 블로그 만드는 법 정리한 포스트입니다.
 Next.js를 사용하는 이유는 대부분의 경우 개인 블로그는 정적 컨텐츠이기에 Next.js의 
 [SSG](https://nextjs.org/docs/pages/building-your-application/rendering/static-site-generation)를 사용하면
-페이지 로딩속도가 빨라집니다. 또한 Next.js는 풀스택 프레임워크로서 
-[SSR](https://nextjs.org/docs/pages/building-your-application/rendering/server-side-rendering)
-과 리액트 기반의 [CSR](https://nextjs.org/docs/pages/building-your-application/rendering/client-side-rendering)을 모두 지원하므로
-개발의 생산성을 향상시킬 수 있습니다.
+필요한 페이지를 build time에 미리 만들어서 재사용하므로 페이지 로딩속도가 빨라집니다. 또한 Next.js는 기본적으로
+[SSR](https://nextjs.org/docs/pages/building-your-application/rendering/server-side-rendering) 기반이므로
+[SEO](https://nextjs.org/learn/seo/introduction-to-seo)에 도움을 줍니다.
+리액트 기반의 클라이언트 컴포넌트가 필요할때는 코드 상단에 `"use client"`를 추가하여
+[CSR](https://nextjs.org/docs/pages/building-your-application/rendering/client-side-rendering)
+도 지원하므로 풀스택 프레임워크로 성장하고 있습니다.
 
 ***
 
@@ -24,7 +26,7 @@ npx create-next-app
 ```
 
 을 입력하여 Next.js 프로젝트를 생성해줍니다.
-![Imgur](https://i.imgur.com/sZV9QnD.png)
+![Imgur](https://imgur.com/sZV9QnD.png)
 기본 설정 값을 물어보는데 저는 기본 값으로 했습니다. ([tailwindcss](https://tailwindcss.com/)는 강추👍)
 
 ## Contentlayer
@@ -35,7 +37,8 @@ Next.js 공식문서에서는 MDX파일 다루는 법으로 `next-mdx-remote`와
 ```
 npm i contentlayer next-contentlayer
 ```
-Contentlayer 설치가 다 되었으면 next.config.js 파일에 가셔서 다음 코드를 넣어줍니다.
+Contentlayer 설치가 다 되었으면 `contentlayer` config를 `next.config.js`에 추가해줍니다.
+mdx 
 ```js
 // next.config.js
 const { withContentlayer } = require('next-contentlayer')
@@ -79,6 +82,9 @@ export default makeSource({
   documentTypes: [Post],
 });
 ```
+위 코드는 `Post` documentType을 만들어 주며, `flattenedPath`로 url field를 만들어 줍니다.
+document types의 field에 tag와 description 등을 추가할 수 있습니다.
+
 이제 MDX 파일을 만들어 봅시다. 프로젝트의 루트에 `posts` 폴더를 만든 후 안에 `test-01.mdx`파일을 만듭니다.
 
 ```
@@ -87,13 +93,12 @@ title: "How to create Next.js app"
 date: 2023-04-06
 ---
 
-# Install Next.js
-
-### Fist you need to install Next.js with the following command:
-
-npm i create-next-app@latest
+# NextJs로 블로그 만들기
+## h2 태그
+### h3 태그
+#### h4 태그
 ```
-여기까지 오신 다음 `npm run dev`로 서버를 엽니다. 콘솔창에 아래와 같이 `.contentlayer` 폴더에
+다음으로 `npm run dev`로 서버를 엽니다. 콘솔창에 아래와 같이 `.contentlayer` 폴더에
 1개의 문서가 생성되었다는 문구가 나오면 성공입니다.
 
 ```
@@ -105,3 +110,114 @@ Generated 1 documents in .contentlayer
 ![Imgur](https://imgur.com/xCUFUzb.png)
 
 아래와 같이 `.contentlayer` 폴더에 제가 만든 `test-01.mdx`파일이 json 형태로 저장된 것을 볼 수 있습니다.
+
+포스트의 작성 날짜를 format하기 위해 `date-fns`를 설치해줍니다.
+```
+npm i date-fns
+```
+그리고 tsconfig.json 파일에 아래 코드를 추가하여 generated files을  `.contentlayer` 폴더에서 가져올 수 
+있게 해줍니다.
+```js
+"paths": {
+  "@/*": ["./*"],
+  "contentlayer/generated": ["./.contentlayer/generated"]
+}
+```
+
+이제 `app`폴더안에 `posts`폴더와 그 안에 `slug`폴더를 만든 후 slug폴더 안에 `page.tsx`를 생성하여 
+다음 코드를 추가해줍니다.
+
+```js
+// app/posts/[slug]/page.tsx
+
+import { allPosts } from "contentlayer/generated";
+import { getMDXComponent } from "next-contentlayer/hooks";
+import { format, parseISO } from "date-fns";
+
+export const generateStaticParams = async () =>
+  allPosts.map((post:any) => ({ slug: post._raw.flattenedPath }));
+
+export const generateMetadata = ({ params }: any) => {
+  const post = allPosts.find(
+    (post: any) => post._raw.flattenedPath === params.slug: any
+  );
+  return { title: post?.title, description: post?.description };
+};
+
+const PostLayout = ({ params }: { params: { slug: string } }) => {
+  const post = allPosts.find((post) => post._raw.flattenedPath === params.slug);
+
+  let MDXContent;
+
+  if (!post) {
+    return <div>404</div>;
+  } else {
+    MDXContent = getMDXComponent(post!.body.code);
+  }
+
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <p>{format(parseISO(post.date), "LLLL d, yyyy")}</p>
+      <article>
+        <MDXContent />
+      </article>
+    </div>
+  );
+};
+
+export default PostLayout;
+```
+
+위 코드는 포스트 페이지를 `slug parameter`를 기준으로 렌더링 시켜줍니다. 자세한 방식은 Next.Js 공식문서의
+[동적 라우트](https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes) 부분에서 확인할 수 있습니다.
+
+코드 작성을 마친 후 `http://localhost:3000/posts/test-01`로 접속하면
+만들었던 mdx파일을 가지고 잘 렌더링된 화면을 확인할 수 있습니다.
+![Imgur](https://imgur.com/75b5zbM.png)
+
+그런데 분명 mdx 태그에는 `#`을 이용해서 h1~h4 태그를 만들었는데 렌더링된 화면에서는 적용이 되어 있지 않습니다.
+`global.css`파일에 가서 아래 코드를 추가해주면
+
+```css
+article h1 {
+  font-size: 2em;
+}
+article h2 {
+  font-size: 1.5em;
+}
+article h3 {
+  font-size: 1.17em;
+}
+article h4 {
+  font-size: 1em;
+}
+```
+
+![Imgur](https://imgur.com/KOzMOOe.png)
+위와 같이 태그가 적용된 모습을 볼 수 있습니다. 그런데 이런 식으로 모든 태그를 스타일링 직접 하기에는 너무 번거로우기에 
+많이들 `tailwindcss`를 사용합니다.
+
+```
+npm i -D @tailwindcss/typography
+```
+
+`@tailwindcss/typography` 플러그인을 설치하고 `tailwindcss.config.ts` 폴더의 `plugins`에 아래 코드를
+추가해줍니다
+
+```js
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
+```
+
+그리고 `app/posts/[slug]/page.tsx` 파일에 ariticle 태그에 `prose`를 className으로 추가해줍니다.
+![Imgur](https://imgur.com/hn0DJE9.png)
+
+태그 스타일이 자동으로 잘 적용된 것을 볼 수 있습니다. `prose`로 적용된 스타일을 변경하시고 싶으시면
+[tailwindcss 공식 문서](https://tailwindcss.com/docs/typography-plugin)에서 확인할 수 있습니다.
+
+추가적으로 포스트안에 포함되어있는 소스코드를 스타일링 하시고 싶으시면
+[rehype-pretty-code](https://rehype-pretty-code.netlify.app/)를 이용하시면 됩니다.
+
+
