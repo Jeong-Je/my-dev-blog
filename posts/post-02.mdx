@@ -159,8 +159,8 @@ export class AppService {
     console.log(`발송대기`);
     this.mailerService
       .sendMail({
-        to: 'fomm12@naver.com',
-        from: 'jeongjeson656@gmail.com',
+        to: //이메일 수신지 주소 입력,
+        from: //이메일 송신지 주소 입력,
         subject: 'Hello', //이메일 제목입력
         template: 'email', //templates 폴더 안에 있는 hbs 파일명 입력
         context: {
