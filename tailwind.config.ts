@@ -20,7 +20,7 @@ const config: Config = {
               content: "''",
             },
             'a':{
-
+              textDecoration: '#38bdf8 wavy underline',
             },
             'img': {
               margin: '24px 0px',
