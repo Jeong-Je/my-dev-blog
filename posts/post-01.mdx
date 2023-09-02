@@ -26,7 +26,7 @@ npx create-next-app
 ```
 
 을 입력하여 Next.js 프로젝트를 생성해줍니다.
-![Imgur](https://imgur.com/sZV9QnD.png)
+![](/images/8.30/8.30.image1.png)
 기본 설정 값을 물어보는데 저는 기본 값으로 했습니다. ([tailwindcss](https://tailwindcss.com/)는 강추👍)
 
 ## Contentlayer
@@ -107,7 +107,7 @@ Generated 1 documents in .contentlayer
 - wait compiling...
 - event compiled client and server successfully in 85 ms (20 modules)
 ```
-![Imgur](https://imgur.com/xCUFUzb.png)
+![](/images/8.30/8.30.image2.png)
 
 아래와 같이 `.contentlayer` 폴더에 제가 만든 `test-01.mdx`파일이 json 형태로 저장된 것을 볼 수 있습니다.
 
@@ -174,7 +174,7 @@ export default PostLayout;
 
 코드 작성을 마친 후 `http://localhost:3000/posts/test-01`로 접속하면
 만들었던 mdx파일을 가지고 잘 렌더링된 화면을 확인할 수 있습니다.
-![Imgur](https://imgur.com/75b5zbM.png)
+![](/images/8.30/8.30.image3.png)
 # 스타일링
 그런데 분명 mdx 태그에는 `#`을 이용해서 h1~h4 태그를 만들었는데 렌더링된 화면에서는 적용이 되어 있지 않습니다.
 `global.css`파일에 가서 아래 코드를 추가해주면
@@ -194,7 +194,7 @@ article h4 {
 }
 ```
 
-![Imgur](https://imgur.com/KOzMOOe.png)
+![](/images/8.30/8.30.image4.png)
 위와 같이 태그가 적용된 모습을 볼 수 있습니다. 그런데 이런 식으로 모든 태그를 스타일링 직접 하기에는 너무 번거로우기에 
 많이들 `tailwindcss`를 사용합니다.
 
@@ -218,7 +218,7 @@ npm i -D @tailwindcss/typography
 ```
 
 그리고 `app/posts/[slug]/page.tsx` 파일에 ariticle 태그에 `prose`를 className으로 추가해줍니다.
-![Imgur](https://imgur.com/hn0DJE9.png)
+![](/images/8.30/8.30.image5.png)
 
 태그 스타일이 자동으로 잘 적용된 것을 볼 수 있습니다. `prose`로 적용된 스타일을 변경하시고 싶으시면
 [tailwindcss 공식 문서](https://tailwindcss.com/docs/typography-plugin)에서 확인할 수 있습니다.

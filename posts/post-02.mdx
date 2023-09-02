@@ -118,7 +118,7 @@ export class AppController {
 ```
 등록한 후 `http://localhost:3000/`에 접속하시면 다음과 같이
 `index.hbs` 파일이 렌더링됩니다.
-![Imgur](https://imgur.com/ZaVJ6Ca.png)
+![](/images/8.31/8.31.image1.png)
 # 인증번호 생성 및 발송
 이제 이메일을 입력하고 인증번호 보내기 버튼을 눌렀을때 인증번호와 함께 이메일을 보내는 코드를 만듭니다.
 `controller`와 `service`에 다음 코드를 입력합니다.
@@ -191,7 +191,7 @@ export class AppService {
 ejs에서는 변수를 넣을려면 `<%= userEmail %>`같이 넣어야 돼서 귀찮은데 hbs는 간단해서 맘에듭니다.
 
 여기서 이제 이메일을 보내면 다음과 같이 인증번호와 함께 이메일이 잘 발송됩니다.
-![Imgur](https://imgur.com/ifM1EiG.png)
+![](/images/8.31/8.31.image2.png)
 # 오류
 갑자기 dist폴더에서 hbs을 못찾는 오류가 발생하여 몇시간 삽질을 하다가 [깃허브 이슈](https://github.com/nest-modules/mailer/issues/494)에서 해결법을 찾았습니다. `nest-cli.json` 파일의 `compilerOptions`에 다음과
 같은 코드를 추가하시고 서버를 껐다가 다시 시작하시면 해결이 됩니다.
