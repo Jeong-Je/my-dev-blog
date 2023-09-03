@@ -27,8 +27,6 @@ function PostCard(post: Post) {
 }
 
 export default function Home({ searchParams }: { searchParams: any }) {
-  // console.log(searchParams);
-
   let filteredPosts;
   if (Object.keys(searchParams).length === 0) {
     filteredPosts = allPosts;
@@ -66,7 +64,7 @@ export default function Home({ searchParams }: { searchParams: any }) {
             </button>
           </Link>
           {tags.map((tag, idx) => (
-            <Link href={`/posts/?tag=${tag}`} key={idx}>
+            <Link href={tag==='C++'?`/posts/?tag=C%2B%2B`:`/posts/?tag=${tag}`} key={idx}>
               <button
                 className={`rounded-full border border-sky-200 hover:border-sky-300 outline outline-sky-200 hover:outline-sky-300 bg-sky-200 hover:bg-sky-300 text-black text-sm px-4 mr-3 whitespace-nowrap ${
                   tag === searchParams?.tag
