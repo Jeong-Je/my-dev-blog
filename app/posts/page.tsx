@@ -4,8 +4,8 @@ import { allPosts, Post } from "contentlayer/generated";
 
 function PostCard(post: Post) {
   return (
-    <Link href={post.url} className="text-black no-underline">
-      <div className="py-8 bg-gray-200 border rounded-lg mx-auto mb-8 prose max-sm:mx-5">
+    <div className="py-8 bg-gray-200 border rounded-lg mx-auto mb-8 prose max-sm:mx-5">
+        <Link href={post.url} className="text-black no-underline">
         <div className="px-5">
           <time dateTime={post.date} className="block text-sm">
             {format(parseISO(post.date), "yyyy년 MM월 dd일")}
@@ -21,8 +21,8 @@ function PostCard(post: Post) {
             </span>
           ))}
         </div>
-      </div>
     </Link>
+      </div>
   );
 }
 
