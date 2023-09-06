@@ -19,8 +19,15 @@ const config: Config = {
             'blockquote p:first-of-type::before': {
               content: "''",
             },
+            'blockquote' :{
+              'border-left': '0.25rem solid #38bdf8',
+            },
+            'li::marker' :{
+              'color': '#38bdf8',
+            },
             'a':{
-              textDecoration: '#38bdf8 wavy underline',
+              'color': '#38bdf8',
+              textDecoration: 'wavy underline',
             },
             'img': {
               margin: '24px 0px',
@@ -41,6 +48,9 @@ const config: Config = {
               'backgroundColor': '#e5e7eb',
               'borderRadius': "0.5rem",
             },
+            'ul': {
+
+            }
           }
         }
       }

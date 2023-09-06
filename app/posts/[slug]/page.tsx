@@ -28,7 +28,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
             <time dateTime={post.date} className="ml-2 text-sm text-zinc-400 ">
               {format(parseISO(post.date), "yyyy년 MM월 dd일")}
             </time>
-            <div className="prose-a:bg-gray-100">
+            <div>
               {tags?.map((tag, idx) => (
                 <Link href={`/posts/?tag=${tag}`} key={idx}>
                   <button className="rounded-full border border-sky-200 hover:border-sky-200 outline outline-sky-200 bg-sky-200 hover:bg-sky-300 text-black text-sm px-4 mr-3">
@@ -39,7 +39,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
             </div>
           </h1>
         </div>
-        <article className="prose-hr:my-5 prose-a:text-sky-400 prose-a:underline-sky-500 prose-blockquote:border-l-sky-400">
+        <article className="prose-hr:my-5">
           <MDXContent />
         </article>
       </div>
