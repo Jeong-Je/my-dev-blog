@@ -107,7 +107,7 @@ Module은 `@Module()` 데코레이터가 달린 클래스입니다. `@Module()` 
 - `exports` : 해당 모듈에서 제공하는 provider의 부분 집합이며, 이 모듈을 가져오는 다른 모듈에서
 사용할 수 있도록 노출할 provider
 
-모듀을 기본적으로 provider를 캡슐화 합니다. 이는 현재 모듈에 직접 속하지 않거나 가져온 모듈에서 export 하지 않는
+모듈은 기본적으로 provider를 캡슐화 합니다. 이는 현재 모듈에 직접 속하지 않거나 가져온 모듈에서 export 하지 않는
 provider를 주입할 수 없습니다. 따라서 모듈에서 export한 provider를 모듈의 공용 인터페이스 또는 API로 간주할 수 있습니다.
 
 Module 파일은 `Nest CLI`로 간편하게 생성할 수 있습니다.
