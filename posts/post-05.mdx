@@ -1,0 +1,116 @@
+---
+title: Controllers / Providers / Modules
+date: 2023-09-06
+tags:
+- NestJS
+description: NestJS의 큰 뼈대인 컨트롤러, 프로바이더, 모듈에 대한 정리입니다.
+---
+
+> NestJS를 다루면서 Controller, Provider 그리고 Module이 대충 어떤 느낌인지는 알고 있었지만 
+그거에 대해서 정확히 알고 있지는 않았다. 생각난 김에 다시 공부하면서 정리해 보지만
+공식문서는 번역본을 봐도 여전히 어렵다.
+***
+# Controllers
+
+`Controller`는 들어오는 들어오는 요청을 처리하고 클라이언트에 응답을 반환합니다.
+![](https://docs.nestjs.com/assets/Controllers_1.png)
+Controller의 목적은 애플리케이션에 대한 특정 요청을 받는 것입니다. 라우팅 메커니즘은 어떤 controller가
+해당 요청을 처리할 지 정합니다. 보통은 각각의 컨트롤러는 하나 이상의 경로를 가지고 있으며, 서로 다른 경로는
+다른 작업을 처리합니다.
+
+클라이언트로부터 user와 관련된 요청이 들어오면 user controller가 해당 요청을 처리하고
+auth와 관련된 요청이 들어오면 auth controller가 요청을 처리합니다.
+
+Controller는 `@Controller` 데코레이터로 클래스를 데코레이션하여 정의합니다.
+```ts
+@Controller('/users')
+export class UsersController {
+  ···
+}
+```
+
+@Controller 데코는 인자로 controller에 의해 처리되는 `경로`를 인자로 받습니다.
+위 코드는 로컬 환경일 경우 `http://localhost:3000/users` 에 대한 요청을 처리하는 controller 입니다.
+
+Controller 파일은 `Nest CLI`로 간편하게 생성할 수 있습니다.
+```
+nest g controller [이름]
+```
+***
+# Providers
+`Provider`는 NestJS에서 기본적인 개념입니다. 많은 기본 Nest 클래스들은 services, repositories, factories, helpers
+등의 provider로 취급될 수 있습니다. provider의 주요 아이디어는 `의존성`을 주입할 수 있다는 것입니다.
+이 뜻은 객체가 서로 다양한 관계를 만들 수 있다는 것을 의미하고 객체 인스턴스를 서로 `연결`하는 기능을 대부분 Nest 런타임 시스템에
+위임할 수 있음을 의미합니다.
+
+> `@injectable()` 데코레이터가 달린 클래스는 Provider로 볼 수 있습니다.
+
+## Services
+Provider의 대표적인 예로 `Service`가 있습니다. service는 일반적으로 비즈니스 로직을 처리하고 DB를 조작하는 데 
+사용되는 Provider의 하위 카테고리입니다. Controller는 HTTP 요청을 처리하는데 복잡한 작업은
+service에게 위임합니다.
+
+`/:id`요청을 받은 controller가 내부 비즈니스 로직을 service에게 위임하는 코드입니다.
+```ts
+//user.controller.ts 
+···
+constructor(private userService: UserService) {}
+
+@Get(':id')
+  getUserById(@Param('id') id: number): User {
+    const user = this.userService.getUserById(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
+  }
+
+···
+```
+
+```ts
+//user.service.ts
+···
+  getUserById(id: number): User | undefined {
+    return this.users.find(user => user.id === id);
+  }
+···
+```
+`UserService`는 다음 controller 클래스의 생성자를 통해서 주입됩니다.
+```ts
+constructor(private userService: UserService) {}
+```
+이로써 우리는 controller에서 service의 비즈니스 로직을 불러와 사용할 수 있습니다.
+
+Service 파일은 `Nest CLI`로 간편하게 생성할 수 있습니다.
+```
+nest g service [이름]
+```
+***
+# Modules
+Module은 `@Module()` 데코레이터가 달린 클래스입니다. `@Module()` 데코레이터는 Nest가 애플리케이션 구조를
+만들 때 사용할 수 있는 [메타데이터](https://ko.wikipedia.org/wiki/%EB%A9%94%ED%83%80%EB%8D%B0%EC%9D%B4%ED%84%B0)를 제공해 주는 역할을 합니다.
+![](https://docs.nestjs.com/assets/Modules_1.png)
+각 응용 프로그램은 적어도 하나 이상의 루트 모듈이 있습니다. 루트 모듈은 Nest가 `application graph`를 구죽하는 데
+시작 지점입니다. 여기서 말하는 `application graph`는 Nest가 Module과 Provider 간의 관계 및 종속성을 
+연결하기 위해 사용하는 내부 데이터 구조입니다.
+
+매우 작은 응용 프로그램은 루트 모듈 단 하나만 사용할 수 있으나, 이는 일반적인 경우가 아닙니다.
+애플리케이션이 커지면 컴포넌트를 분리 해야 하고 컴포넌트를 구성하는 효과적인 방법으로 여러 개의 모듈을
+사용해야 합니다. 따라서 대부분의 애플리케이션에서는 각각 밀접하게 관련된 기능을 묶어서 캡슐화하는
+모듈을 여러 개 사용합니다.
+
+`@Module` 데코레이터는 아래 속성을 가지는 객체가 필요합니다. 이 객체는 모듈을 구성하는 데 필요한 정보를 가지고 있습니다.
+- `Providers` : Nest 인젝터(Injector: 의존성을 주입하는 Nest 내부 모듈)가 인스턴스화시키고 적어도 이 모듈 안에서 공유하는 프로바이더.
+- `Controllers` : 이 모듈에서 인스턴스화되어야 하는 controller 집합
+- `imports` : 해당 모듈에서 필요한 모듈의 집합. 여기에 들어가는 모듈은 프로바이더를 노출하는 모듈입니다.
+- `exports` : 해당 모듈에서 제공하는 provider의 부분 집합이며, 이 모듈을 가져오는 다른 모듈에서
+사용할 수 있도록 노출할 provider
+
+모듀을 기본적으로 provider를 캡슐화 합니다. 이는 현재 모듈에 직접 속하지 않거나 가져온 모듈에서 export 하지 않는
+provider를 주입할 수 없습니다. 따라서 모듈에서 export한 provider를 모듈의 공용 인터페이스 또는 API로 간주할 수 있습니다.
+
+Module 파일은 `Nest CLI`로 간편하게 생성할 수 있습니다.
+```
+nest g module [이름]
+```
