@@ -6,6 +6,8 @@ tags:
 description: Nest.js와 express-session을 이용해서 인증번호를 저장, 관리하는 방법을 정리한 포스트입니다.
 ---
 
+![](/images/thumbnails/nestjs.png)
+
 > [이전글](https://jeongje.vercel.app/posts/post-02)에서 NestJs와 nodemailer로 인증번호를 발송하는 것까지 정리했습니다.
 이번에는 인증번호를 저장, 관리하고 사용자로부터 입력받은 인증번호에 따라 인증 성공/실패를 나눠보겠습니다.
 
@@ -16,8 +18,10 @@ description: Nest.js와 express-session을 이용해서 인증번호를 저장, 
 그러면 서버가 생성한 인증코드를 어디에 저장해야 되나..
 DB에 저장하는 방법도 있겠으나 인증코드는 대부분 몇 분이 지나면 사라지는 휘발성 데이터이므로 DB에 저장하면
 서버 자원의 낭비가 될 수 있다. 그래서 생각한 게 캐시를 사용하고 캐시 솔루션으로 `Redis`를 사용하려고 했지만
-Redis가 윈도우OS를 공식적으로 지원하지 않아서 어떻게 할까 고민하다가 그냥 세션을 이용하기로 했다.</small>
+Redis가 윈도우OS를 공식적으로 지원하지 않고 아직 내 지식이 부족해서 어떻게 할까 고민하다가 그냥 세션을 이용하기로 했다.</small>
 
+> 여기서 express-session을 사용하면서 @Req와 @Res 데코를 이용해서 req와 res 객체를 사용했는데 사실 NestJS 내에서는 Express
+객체를 직접적으로 사용하는 것은 좋은 방법이 아니라고 한다.
 ***
 
 # express-session 설치
