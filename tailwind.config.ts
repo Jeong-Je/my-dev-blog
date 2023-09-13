@@ -28,6 +28,9 @@ const config: Config = {
             'a':{
               'color': '#38bdf8',
               textDecoration: 'wavy underline',
+              '&:hover': {
+                'color': 'blue',
+              }
             },
             'img': {
               margin: '24px 0px',

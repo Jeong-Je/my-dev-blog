@@ -12,7 +12,7 @@ export default function Footer() {
         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
           © 2023{" "}
             JeongJeSon
-          . All Rights Reserved.
+          . Developed with NextJS
         </span>
         <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
           <li className="md:ml-5">
