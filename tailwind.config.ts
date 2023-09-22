@@ -48,8 +48,10 @@ const config: Config = {
             },
             'code': {
               'padding': '3px',
-              'backgroundColor': '#e5e7eb',
+              'font-weight': '400',
+              'backgroundColor': '#d1d5db',
               'borderRadius': "0.5rem",
+              'color': '#b91c1c',
             },
             'ul': {
 

@@ -38,7 +38,7 @@ export default function Nav() {
   return (
     <>
       <nav
-        className={`backdrop-blur-md top-3 fixed left-0 right-0 flex items-center justify-center h-20 border-y transition-shadow duration-500  ${
+        className={`backdrop-blur-md top-2 fixed left-0 right-0 flex items-center justify-center h-20 border-y transition-shadow duration-500  ${
           scrolling ? "shadow-xl" : "shadow-none"
         } `}
       >

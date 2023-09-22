@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { compareDesc, format, parseISO } from "date-fns";
 import { allPosts, Post } from "contentlayer/generated";
-import { serialize } from "v8";
 
 const TagCard = ({
   searchParams,
@@ -114,7 +113,7 @@ export default function Home({ searchParams }: { searchParams: any }) {
 
   //allTags의 중복 값들 제거
   const tags = allTags.filter((v, i) => allTags.indexOf(v) === i);
-  console.log(pagination);
+  // console.log(pagination);
 
   //페이지수가 총 3페이지라면 0~2 배열 생성
   let pageIntoArray = Array.from(Array(pagination).keys());
@@ -123,18 +122,19 @@ export default function Home({ searchParams }: { searchParams: any }) {
     <>
       <div className="pt-32 mx-auto">
         <TagCard searchParams={searchParams} tags={tags} />
-        <div className="prose mx-auto pl-5 max-sm:ml-5">
+        <div className="prose mx-auto px-5 max-sm:mx-5">
           {searchParams.tag !== "ALL" ? (
             <h4>
-              {searchParams.tag} 게시글 수: {postCount}개
+              {searchParams.tag} ({postCount})
             </h4>
           ) : (
-            <h4>전체 게시글 수: {postCount}개</h4>
+            <h4>All Posts ({postCount})</h4>
           )}
         </div>
         {posts.map((post, idx) => (
           <PostCard key={idx} {...post} />
         ))}
+
         <div className="prose mx-auto text-center">
           {pageIntoArray.map((page) => {
             return (
@@ -145,8 +145,9 @@ export default function Home({ searchParams }: { searchParams: any }) {
                       ? `/posts?tag=${searchParams.tag}`
                       : `/posts?tag=${searchParams.tag}&page=${page + 1}`
                   }
-                  className={`no-underline ${
-                    parseInt(searchParams.page) === page + 1 || (page===0)&&(!searchParams.page)
+                  className={`no-underline hover:text-sky-500 ${
+                    parseInt(searchParams.page) === page + 1 ||
+                    (page === 0 && !searchParams.page)
                       ? "text-sky-500"
                       : "no-underline text-black"
                   }`}
