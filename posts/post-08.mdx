@@ -1,0 +1,200 @@
+---
+title: "[NestJS] Socket.io를 이용한 채팅앱 기본 설정"
+date: 2023-09-23
+tags: 
+- NestJS
+- WEB
+- TCP/IP
+- Socket
+description: Socket.io를 이용한 서버와 클라이언트 연결하기
+---
+
+![](/images/thumbnails/nestjs.png)
+
+> 토이 프로젝트로 커뮤니티 웹을 만들고 있는데 유저들끼리 채팅 기능을 추가하기 위해 `Socket.io`를 사용하려는데
+`NestJS`에서는 `Express`와 사용법이 조금 달라서 정리합니다.
+***
+# WebSocket ?
+
+## HTTP의 단방향 통신
+HTTP는 클라이언트가 서버에 요청을 보내고, 서버가 응답을 반환하는 단방향 통신을 기반으로 합니다.
+채팅과 같은 실시간 통신에서는 양방향 통신이 필요하고 이러한 양방향 통신을 구현하기 위해서는 
+HTTP와 OSI 모델의 같은 계층(7계층)에 위치한 계 `WebSocket`과 같은
+프로토콜이 필요합니다.
+
+
+## Node에서 Web Socket
+Node에서는 웹 소켓을 구현하기 위한 두 라이브러리 [ws](https://www.npmjs.com/package/ws)와 [socket.io](https://socket.io/)가 존재하지만 `ws`보다는
+`socket.io`가 구현하기 편하고 더 다양한 기능<small>(room과 namespace 등)</small>을 지원하므로 
+저는 `socket.io`를 사용하려 합니다.
+***
+# NestJS에서 socket.io
+## Gateways
+`NestJS`는 내장 기능으로 `socket.io`를 `Gateways`를 이용해서 지원합니다.
+![](https://docs.nestjs.com/assets/Gateways_1.png)
+`Gateways`도 `providers`로 취급되므로 사용하는 `module`에 `providers`로 추가하여야 사용할 수 있습니다.
+## 패키지 설치
+```
+npm i --save @nestjs/websockets @nestjs/platform-socket.io
+```
+
+## 게이트웨이와 모듈 설치
+```
+nest g gateway events
+nest g module events
+```
+
+events 게이트웨이와 모듈의 설치가 끝나면 `EventsModule`에 `EventsGateway`를 `provider`로 등록해 줘야 합니다.
+
+만약 `app.module`에 `EventsGateway`가 프로바이더로 자동 등록되었다면 지우고 `EventsModule`에 등록하여 사용하는 게 바람직합니다.
+
+```ts
+//events.module.ts
+import { Module } from '@nestjs/common';
+import { EventsGateway } from './events.gateway';
+
+@Module({
+  providers: [EventsGateway],
+})
+export class EventsModule {}
+```
+
+# Gateway 코드
+```ts
+import {
+  MessageBody,
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
+  OnGatewayInit,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
+  ConnectedSocket,
+} from '@nestjs/websockets';
+import { Socket, Server } from 'socket.io';
+import { Logger } from '@nestjs/common';
+
+@WebSocketGateway(80, { namespace: 'chat' })
+export class EventsGateway
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
+  private logger = new Logger('chat');
+  constructor() {
+    this.logger.log('constructor');
+  }
+
+  @WebSocketServer()
+  server: Server;
+
+  @SubscribeMessage('ClientToServer')
+  handleMessage(@MessageBody() data: string) {
+    this.logger.log(`received message : ${data}`);
+    this.server.emit('ServerToClient', `서버가 받고 보낸 데이터 ${data}`);
+    return `서버가 받은 데이터 ${data}`;
+  }
+
+  afterInit(server: Server) {
+    this.logger.log('init');
+  }
+
+  handleConnection(@ConnectedSocket() socket) {
+    this.logger.log(`connected: ${socket.id} ${socket.nsp.name}`);
+  }
+
+  handleDisconnect(@ConnectedSocket() socket: Socket) {
+    this.logger.log(`disconnected: ${socket.id} ${socket.nsp.name}`);
+  }
+}
+```
+## @WebSocketGateWay
+
+`@WebSocketGateWay`의 인자로 사용할 `포트`와 `namespace`을 설정할 수 있습니다.
+
+두 번째 인자로는 namespace말고 [다른 옵션](https://socket.io/docs/v4/server-options/)들도 사용할 수 있습니다.
+
+```ts
+@WebSocketGateway(80, { namespace: 'chat' })
+```
+위 코드는 80번 `포트`를 사용하고 `namespace`를 chat으로 설정한 코드입니다.
+
+
+## Lifecycle hooks
+
+`EventsGateway` 클래스를 생성할 때 3가지 인터페이스를 상속 받았습니다.
+
+- `OnGatewayInit`는 `afterInit` 메소드를 구현해야 하고
+
+- `OnGatewayConnection`는 `handleConnection` 메소드를 구현해야 하고
+
+- `OnGatewayDisconnect`는 `handleDisconnect` 메소드를 구현해야 합니다.
+
+위 세 가지 메소드 구현은 `필수`적이고 구현하지 않으면 `EventsGateway` 클래스 생성 시 오류가 발생합니다.
+
+## afterInit
+
+`afterInit` 메소드는 웹소켓 서버가 초기화된 후 호출되는 메소드입니다.
+이 메소드에서는 주로 웹소켓 서버와 관련된 초기 작업을 수행하거나 서버가 준비된 것을 로그로 남기는 작업 등을 할 수 있습니다.
+
+위 코드에서는 클라이언트와 연결되기 전에 `EventsGateway` 클래스의 `생성자 함수`가 실행될 때 로그를 남기고
+`afterInit` 메소드가 실행될 때 로그를 남기도록 작성했습니다.
+![](/images/9.23/9.23.image1.png)
+
+서버 실행 시 위와 같이 로그가 정상적으로 남겨진 것을 확인할 수 있습니다.
+
+## handleConnection
+
+`handleConnection` 메소드는 클라이언트와 연결되었을 때 호출되는 메소드입니다.
+
+```ts
+handleConnection(@ConnectedSocket() socket) {
+    this.logger.log(`connected: ${socket.id} ${socket.nsp.name}`);
+}
+```
+클라이언트와 연결되면 클라이언트를 식별할 값과 현재 방을 로그로 남기도록 되어 있습니다.
+
+postman에 socket.io 워크스페이스를 생성하고 요청 주소에 설정한 포트와 namespace를 넣고 연결을 누르면
+![](/images/9.23/9.23.image2.png)
+
+`handleConnection` 메소드가 정상적으로 실행된 것을 로그로 확인할 수 있습니다.
+![](/images/9.23/9.23.image3.png)
+
+## handleDisconnect
+`handleDisconnect` 메소드는 클라이언트와 연결이 끊겼을 때 실행되는 메소드입니다.
+```ts
+handleDisconnect(@ConnectedSocket() socket: Socket) {
+    this.logger.log(`disconnected: ${socket.id} ${socket.nsp.name}`);
+}
+```
+
+postman에서 연결을 끊으면
+![](/images/9.23/9.23.image4.png)
+
+`handleDisconnect` 메소드가 정상적으로 실행된 것을 로그로 확인할 수 있습니다.
+
+## @SubscribeMessage @MessageBody
+
+@SubscribeMessage 데코의 인자로 수신할 Event의 이름을 설정할 수 있고
+
+@MessageBody 데코로 클라이언트에서 온 데이터를 받을 수 있습니다.
+
+```ts
+@SubscribeMessage('ClientToServer')
+handleMessage(@MessageBody() data: string) {
+    this.logger.log(`received message : ${data}`);
+    this.server.emit('ServerToClient', `서버가 받고 보낸 데이터 : ${data}`);
+    return `서버가 받은 데이터 ${data}`;
+}
+```
+
+클라이언트에서 온 데이터를 로그로 남기고 `server.emit` 함수로 클라이언트로 데이터를 보낼 수 있습니다.
+
+postman에서 데이터를 보낼 때 Event 값을 `ClientToServer`로 설정하고
+![](/images/9.23/9.23.image5.png)
+수신할 이벤트를 `ServerToClient`로 설정하고
+![](/images/9.23/9.23.image6.png)
+
+메세지를 보내면 클라이언트의 메세지가 서버 로그에 남고
+![](/images/9.23/9.23.image7.png)
+
+클라이언트는 `server.emit`로 인해 서버로부터 메세지를 받습니다.
+![](/images/9.23/9.23.image8.png)
