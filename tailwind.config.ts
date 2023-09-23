@@ -37,6 +37,9 @@ const config: Config = {
               width: "650px",
               borderRadius: "0.5rem",
             },
+            'h1':{
+              color: '#f87171'
+            },
             'h2':{
               marginTop: '0',
             },

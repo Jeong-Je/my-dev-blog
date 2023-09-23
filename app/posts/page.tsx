@@ -71,6 +71,28 @@ const PostCard = (post: Post) => {
   );
 };
 
+const Pagination = ({
+  searchParams,
+  page,
+}: {
+  searchParams: any;
+  page: number;
+}) => {
+  return (
+    <Link href={`/posts?tag=${searchParams.tag}&page=${page + 1}`}>
+      <div
+        className={`prose w-10 h-10 text-center ${
+          parseInt(searchParams.page) === page + 1
+            ? "bg-gray-500 text-white"
+            : "hover:bg-gray-200"
+        } rounded-md flex items-center justify-center`}
+      >
+        {page + 1}
+      </div>
+    </Link>
+  );
+};
+
 export default function Home({ searchParams }: { searchParams: any }) {
   // console.log('1',searchParams);
   if (!searchParams.tag) {
@@ -124,6 +146,7 @@ export default function Home({ searchParams }: { searchParams: any }) {
   return (
     <>
       <div className="pt-32 mx-auto">
+        {/* 태그 카드 컴포넌트 */}
         <TagCard searchParams={searchParams} tags={tags} />
         <div className="prose mx-auto px-5 max-sm:mx-5">
           {searchParams.tag !== "ALL" ? (
@@ -134,35 +157,17 @@ export default function Home({ searchParams }: { searchParams: any }) {
             <h4>All Posts ({postCount})</h4>
           )}
         </div>
+        
+        {/* 게시글 컴포넌트 */}
         {posts.map((post, idx) => (
           <PostCard key={idx} {...post} />
         ))}
 
+        {/* 페이지 네이션 컴포넌트 */}
         <div className="flex justify-center">
-          {pageIntoArray.map((page) => {
-            return (
-              <div
-                className={`prose w-10 h-10 text-center ${
-                  parseInt(searchParams.page) === page + 1
-                    ? "bg-gray-500"
-                    : "hover:bg-gray-200"
-                } rounded-md flex items-center justify-center`}
-              >
-                <li className="inline-block">
-                  <Link
-                    href={`/posts?tag=${searchParams.tag}&page=${page + 1}`}
-                    className={`no-underline ${
-                      parseInt(searchParams.page) === page + 1
-                        ? "text-white hover:text-white"
-                        : "text-gray-500 hover:text-gray-500"
-                    }`}
-                  >
-                    {page + 1}
-                  </Link>
-                </li>
-              </div>
-            );
-          })}
+          {pageIntoArray.map((page, idx) => (
+            <Pagination key={idx} searchParams={searchParams} page={page} />
+          ))}
         </div>
       </div>
     </>

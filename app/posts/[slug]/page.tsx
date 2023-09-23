@@ -23,7 +23,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
       {/* 본문 (추후 구조 수정 필요) */}
       <div className="pt-24 mx-auto prose max-sm:mx-5">
         <div className="flex">
-          <h1 className="pt-5 pb-0 text-4xl font-bold">
+          <h1 className="pt-5 pb-0 text-4xl font-bold text-black">
             {post.title}
             <br />
             <time dateTime={post.date} className="ml-2 text-sm text-zinc-400 ">
