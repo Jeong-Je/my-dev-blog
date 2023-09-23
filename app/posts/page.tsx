@@ -14,10 +14,10 @@ const TagCard = ({
       <div className="flex overflow-auto prose mx-auto mb-8 pb-2 max-sm:mx-5">
         <Link href="/posts?tag=ALL">
           <button
-            className={`ml-1 rounded-full border border-red-200 outline outline-red-200 bg-red-200 text-black text-sm px-4 mr-3 ${
+            className={`ml-1 rounded-full border border-gray-200 outline outline-gray-200 bg-gray-200 text-black text-sm px-4 mr-3 ${
               searchParams.tag === "ALL"
-                ? "outline-red-500 bg-red-500 border-red-500 text-white"
-                : "hover:outline-red-400 hover:bg-red-400 hover:border-red-400"
+                ? "outline-gray-500 bg-gray-500 border-gray-500 text-white"
+                : "hover:outline-gray-400 hover:bg-gray-400 hover:border-gray-400"
             }`}
           >
             ALL
@@ -29,10 +29,10 @@ const TagCard = ({
             key={idx}
           >
             <button
-              className={`rounded-full border border-red-200 outline outline-red-200 bg-red-200 text-black text-sm px-4 mr-3 whitespace-nowrap ${
+              className={`rounded-full border border-gray-200 outline outline-gray-200 bg-gray-200 text-black text-sm px-4 mr-3 whitespace-nowrap ${
                 tag === searchParams?.tag
-                  ? "outline-red-500 bg-red-500 border-red-500 hover:outline-red-500 hover:bg-red-500 hover:border-red-500 text-white"
-                  : "hover:outline-red-400 hover:bg-red-400 hover:border-red-400"
+                  ? "outline-gray-500 bg-gray-500 border-gray-500 hover:outline-gray-500 hover:bg-gray-500 hover:border-gray-500 text-white"
+                  : "hover:outline-gray-400 hover:bg-gray-400 hover:border-gray-400"
               }`}
             >
               {tag}
@@ -144,9 +144,9 @@ export default function Home({ searchParams }: { searchParams: any }) {
               <div
                 className={`prose w-10 h-10 text-center ${
                   parseInt(searchParams.page) === page + 1
-                    ? "bg-red-700 hover:bg-red-700"
-                    : ""
-                } rounded-md flex items-center justify-center hover:bg-gray-300`}
+                    ? "bg-gray-500"
+                    : "hover:bg-gray-200"
+                } rounded-md flex items-center justify-center`}
               >
                 <li className="inline-block">
                   <Link
@@ -154,8 +154,8 @@ export default function Home({ searchParams }: { searchParams: any }) {
                     className={`no-underline ${
                       parseInt(searchParams.page) === page + 1
                         ? "text-white hover:text-white"
-                        : ""
-                    } text-gray-500 hover:text-gray-500 `}
+                        : "text-gray-500 hover:text-gray-500"
+                    }`}
                   >
                     {page + 1}
                   </Link>

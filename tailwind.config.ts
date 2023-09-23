@@ -20,10 +20,10 @@ const config: Config = {
               content: "''",
             },
             'blockquote' :{
-              'border-left': '0.25rem solid #b91c1c',
+              'border-left': '0.25rem solid',
             },
             'li::marker' :{
-              'color': '#b91c1c',
+              'color': 'black',
             },
             'a':{
               'color': '#b91c1c',
