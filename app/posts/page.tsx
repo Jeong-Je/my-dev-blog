@@ -14,10 +14,10 @@ const TagCard = ({
       <div className="flex overflow-auto prose mx-auto mb-8 pb-2 max-sm:mx-5">
         <Link href="/posts?tag=ALL">
           <button
-            className={`ml-1 rounded-full border border-sky-200 hover:border-sky-300 outline outline-sky-200 hover:outline-sky-300 bg-sky-200 hover:bg-sky-300 text-black text-sm px-4 mr-3 ${
+            className={`ml-1 rounded-full border border-red-200 outline outline-red-200 bg-red-200 text-black text-sm px-4 mr-3 ${
               searchParams.tag === "ALL"
-                ? "bg-sky-400 outline-sky-400 border-sky-400"
-                : ""
+                ? "outline-red-500 bg-red-500 border-red-500 text-white"
+                : "hover:outline-red-400 hover:bg-red-400 hover:border-red-400"
             }`}
           >
             ALL
@@ -29,10 +29,10 @@ const TagCard = ({
             key={idx}
           >
             <button
-              className={`rounded-full border border-sky-200 hover:border-sky-300 outline outline-sky-200 hover:outline-sky-300 bg-sky-200 hover:bg-sky-300 text-black text-sm px-4 mr-3 whitespace-nowrap ${
+              className={`rounded-full border border-red-200 outline outline-red-200 bg-red-200 text-black text-sm px-4 mr-3 whitespace-nowrap ${
                 tag === searchParams?.tag
-                  ? "bg-sky-400 outline-sky-400 border-sky-400"
-                  : ""
+                  ? "outline-red-500 bg-red-500 border-red-500 hover:outline-red-500 hover:bg-red-500 hover:border-red-500 text-white"
+                  : "hover:outline-red-400 hover:bg-red-400 hover:border-red-400"
               }`}
             >
               {tag}
@@ -61,7 +61,7 @@ const PostCard = (post: Post) => {
             dangerouslySetInnerHTML={{ __html: post.description }}
           />
           {post.tags?.map((tag, idx) => (
-            <span key={idx} className="pt-3 pr-4 no-underline text-sky-500">
+            <span key={idx} className="pt-3 pr-4 no-underline text-red-700">
               #{tag}
             </span>
           ))}
@@ -75,6 +75,9 @@ export default function Home({ searchParams }: { searchParams: any }) {
   // console.log('1',searchParams);
   if (!searchParams.tag) {
     searchParams.tag = "ALL";
+  }
+  if (!searchParams.page) {
+    searchParams.page = "1";
   }
   // console.log('2',searchParams);
   let filteredPosts;
@@ -135,26 +138,29 @@ export default function Home({ searchParams }: { searchParams: any }) {
           <PostCard key={idx} {...post} />
         ))}
 
-        <div className="prose mx-auto text-center">
+        <div className="flex justify-center">
           {pageIntoArray.map((page) => {
             return (
-              <li key={page} className="inline-block mr-5">
-                <Link
-                  href={
-                    page === 0
-                      ? `/posts?tag=${searchParams.tag}`
-                      : `/posts?tag=${searchParams.tag}&page=${page + 1}`
-                  }
-                  className={`no-underline hover:text-sky-500 ${
-                    parseInt(searchParams.page) === page + 1 ||
-                    (page === 0 && !searchParams.page)
-                      ? "text-sky-500"
-                      : "no-underline text-black"
-                  }`}
-                >
-                  {page + 1}
-                </Link>
-              </li>
+              <div
+                className={`prose w-10 h-10 text-center ${
+                  parseInt(searchParams.page) === page + 1
+                    ? "bg-red-700 hover:bg-red-700"
+                    : ""
+                } rounded-md flex items-center justify-center hover:bg-gray-300`}
+              >
+                <li className="inline-block">
+                  <Link
+                    href={`/posts?tag=${searchParams.tag}&page=${page + 1}`}
+                    className={`no-underline ${
+                      parseInt(searchParams.page) === page + 1
+                        ? "text-white hover:text-white"
+                        : ""
+                    } text-gray-500 hover:text-gray-500 `}
+                  >
+                    {page + 1}
+                  </Link>
+                </li>
+              </div>
             );
           })}
         </div>

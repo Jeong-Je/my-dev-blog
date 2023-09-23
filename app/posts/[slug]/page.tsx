@@ -31,7 +31,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
             <div>
               {tags?.map((tag, idx) => (
                 <Link href={`/posts/?tag=${tag}`} key={idx}>
-                  <button className="rounded-full border border-sky-200 hover:border-sky-200 outline outline-sky-200 bg-sky-200 hover:bg-sky-300 text-black text-sm px-4 mr-3">
+                  <button className="rounded-full border border-red-200 hover:border-red-300 outline outline-red-200 hover:outline-red-300 bg-red-200 hover:bg-red-300 text-black text-sm px-4 mr-3">
                     {tag}
                   </button>
                 </Link>

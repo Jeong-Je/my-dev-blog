@@ -20,16 +20,16 @@ const config: Config = {
               content: "''",
             },
             'blockquote' :{
-              'border-left': '0.25rem solid #38bdf8',
+              'border-left': '0.25rem solid #b91c1c',
             },
             'li::marker' :{
-              'color': '#38bdf8',
+              'color': '#b91c1c',
             },
             'a':{
-              'color': '#38bdf8',
+              'color': '#b91c1c',
               textDecoration: 'wavy underline',
               '&:hover': {
-                'color': 'blue',
+                'color': 'red',
               }
             },
             'img': {

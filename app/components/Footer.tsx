@@ -5,7 +5,7 @@ import {
 } from "react-icons/ai";
 
 export default function Footer() {
-  const style = {color:"#38bdf8"}
+  const style = {color:"#6b7280"}
   return (
     <footer className="mt-10 max-w-[650px] max-sm:max-w-[90%] mx-auto  bottom-0 bg-gray-200 rounded-lg shadow m-4">
       <div className="max-w-screen-xl p-4 md:flex md:items-center md:justify-between">

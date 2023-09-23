@@ -34,7 +34,7 @@ export default function Nav() {
     setHamburger(!hamburger);
   };
 
-  const style = { color: "#38bdf8" };
+  const style = { color: "#4b5563" };
   return (
     <>
       <nav
@@ -58,10 +58,10 @@ export default function Nav() {
           {/* 네비게이션 */}
           <div className="hidden sm:flex">
             <ul className="hidden sm:flex">
-              <li className="ml-10 uppercase ease-in duration-200 hover:text-2xl text-sky-500 text-xl">
+              <li className="ml-10 uppercase ease-in duration-200 hover:text-2xl text-xl">
                 <Link href="/">Home</Link>
               </li>
-              <li className="ml-10 mr-1 uppercase ease-in duration-200 hover:text-2xl text-sky-500 text-xl">
+              <li className="ml-10 mr-1 uppercase ease-in duration-200 hover:text-2xl text-xl">
                 <Link href="/posts">Posts</Link>
               </li>
             </ul>
@@ -95,13 +95,13 @@ export default function Nav() {
                 onClick={() => setHamburger(false)}
                 className="py-4 cursor-pointer"
               >
-                <Link href="/" className="text-sky-400">Home</Link>
+                <Link href="/">Home</Link>
               </li>
               <li
                 onClick={() => setHamburger(false)}
                 className="py-4 cursor-pointer"
               >
-                <Link href="/posts" className="text-sky-400">Posts</Link>
+                <Link href="/posts">Posts</Link>
               </li>
             </ul>
           </div>

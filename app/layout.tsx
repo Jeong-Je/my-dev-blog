@@ -8,9 +8,9 @@ import ScrollIndicator from "./components/ScrollIndicator";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "JeongJe-Blog",
+  title: "Jeong dev",
   description: "JeongJe의 개인 블로그입니다.",
-  themeColor: "#2196f3",
+  themeColor: "#f87171",
 };
 
 export default function RootLayout({
