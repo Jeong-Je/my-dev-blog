@@ -24,7 +24,7 @@ export async function GET() {
     feed.item({
       title: post.title,
       description: post.description,
-      url: `https://jeongje.vercel.app/posts/${post.url}`,
+      url: `${URL}/posts/${post.url}`,
       date: post.date,
     });
   });
