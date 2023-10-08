@@ -13,10 +13,15 @@ export default function Home({ searchParams }: { searchParams: any }) {
     searchParams.page = "1";
   }
   // console.log('2',searchParams);
-  let allPostsData = allPosts;
+
+  // 게시글 날짜 순으로 불러오기
+  let allPostsData = allPosts.sort((a, b) =>
+    compareDesc(new Date(a.date), new Date(b.date))
+  );
 
   // 태그카드에 사용될 태그 배열
   let allTags: Array<string> = [];
+
   allPostsData.map((post) => {
     if (post.tags) {
       allTags.push(...post.tags); // 태그 배열을 추가
@@ -25,15 +30,12 @@ export default function Home({ searchParams }: { searchParams: any }) {
 
   //allTags의 중복 값들 제거
   const tags = allTags.filter((v, i) => allTags.indexOf(v) === i);
-  
-  if(searchParams.tag !== "ALL"){
-    allPostsData = allPostsData.filter((p) => p.tags?.includes(searchParams?.tag));
-  }
 
-  // 게시글 날짜 순으로 정렬
-  let posts = allPostsData.sort((a, b) =>
-    compareDesc(new Date(a.date), new Date(b.date))
-  );
+  if (searchParams.tag !== "ALL") {
+    allPostsData = allPostsData.filter((p) =>
+      p.tags?.includes(searchParams?.tag)
+    );
+  }
 
   const postCount = allPostsData.length;
 
@@ -47,7 +49,7 @@ export default function Home({ searchParams }: { searchParams: any }) {
     const startIndex = (currentPage - 1) * postsPerPage;
     const endIndex = currentPage * postsPerPage;
 
-    posts = posts.slice(startIndex, endIndex);
+    allPostsData = allPostsData.slice(startIndex, endIndex);
   }
 
   //페이지수가 총 3페이지라면 0~2 배열 생성
@@ -69,7 +71,7 @@ export default function Home({ searchParams }: { searchParams: any }) {
         </div>
 
         {/* 게시글 컴포넌트 */}
-        {posts.map((post, idx) => (
+        {allPostsData.map((post, idx) => (
           <PostCard key={idx} {...post} />
         ))}
 
