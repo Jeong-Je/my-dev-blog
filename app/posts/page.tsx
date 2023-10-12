@@ -31,6 +31,8 @@ export default function Home({ searchParams }: { searchParams: any }) {
   //allTags의 중복 값들 제거
   const tags = allTags.filter((v, i) => allTags.indexOf(v) === i);
 
+
+  //태그에 맞는 게시글 불러오기
   if (searchParams.tag !== "ALL") {
     allPostsData = allPostsData.filter((p) =>
       p.tags?.includes(searchParams?.tag)
