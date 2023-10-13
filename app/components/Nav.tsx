@@ -20,6 +20,7 @@ export default function Nav() {
   const style = { color: "#ffffff" };
   return (
     <>
+      <div className="bg-sky-400 fixed h-2 w-full"></div>
       <nav
         className={`backdrop-blur-md fixed left-0 right-0 flex items-center justify-center h-20 shadow-xl`}
       >
@@ -28,11 +29,11 @@ export default function Nav() {
           <Link href="/">
             <Image
               src={Logo}
-              height= "50"
+              height="50"
               alt="Logo"
               className="cursor-pointer"
               placeholder="blur"
-              blurDataURL={'/logo.png'}
+              blurDataURL={"/logo.png"}
             />
           </Link>
 
@@ -67,7 +68,7 @@ export default function Nav() {
         >
           <div className="flex w-full items-center justify-end">
             <div onClick={handleHamburger} className="cursor-pointer">
-              <AiOutlineClose size={25}/>
+              <AiOutlineClose size={25} />
             </div>
           </div>
           <div className="flex-col py-4">
@@ -88,16 +89,10 @@ export default function Nav() {
           </div>
           <div className="flex flex-row justify-around pt-10 items-center">
             <a href="mailto:jeongjeson656@gmail.com">
-              <AiOutlineMail
-                size={30}
-                className="cursor-pointer"
-              />
+              <AiOutlineMail size={30} className="cursor-pointer" />
             </a>
             <a href="https://github.com/Jeong-Je" target="_blank">
-              <AiOutlineGithub
-                size={30}
-                className="cursor-pointer"
-              />
+              <AiOutlineGithub size={30} className="cursor-pointer" />
             </a>
           </div>
         </div>
