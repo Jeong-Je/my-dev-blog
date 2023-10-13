@@ -3,14 +3,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import ScrollIndicator from "./components/ScrollIndicator";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Jeong dev",
   description: "JeongJe의 개인 블로그입니다.",
-  themeColor: "#f87171",
+  themeColor: "#232E3C",
 };
 
 export default function RootLayout({
