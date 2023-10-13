@@ -14,7 +14,7 @@ export const PostCard = (post: Post) => {
             <time dateTime={post.date} className="block text-sm">
               {format(parseISO(post.date), "yyyy년 MM월 dd일")}
             </time>
-            <h2 className="my-1 text-xl font-bold">{post.title}</h2>
+            <h2 className="my-1 text-xl font-bold text-black">{post.title}</h2>
             <div
               className="text-sm [&>*]:mb-3 [&>*:last-child]:mb-0"
               dangerouslySetInnerHTML={{ __html: post.description }}

@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Jeong dev",
   description: "JeongJe의 개인 블로그입니다.",
-  themeColor: "#9ca3af",
+  themeColor: "#f87171",
 };
 
 export default function RootLayout({
@@ -22,7 +22,6 @@ export default function RootLayout({
     <html lang="kr">
       <body className={`${inter.className}`}>
         <Nav />
-        <ScrollIndicator />
         {children}
         <Footer />
       </body>

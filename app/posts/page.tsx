@@ -64,11 +64,11 @@ export default function Home({ searchParams }: { searchParams: any }) {
         <TagCard searchParams={searchParams} tags={tags} />
         <div className="prose mx-auto px-5 max-sm:mx-5">
           {searchParams.tag !== "ALL" ? (
-            <h4>
-              {searchParams.tag} ({postCount})
-            </h4>
+            <h3 style={{color: "white"}}>
+              📝 {searchParams.tag} ({postCount})
+            </h3>
           ) : (
-            <h4>All Posts ({postCount})</h4>
+            <h3 style={{color: "white"}}>📝 All Posts ({postCount})</h3>
           )}
         </div>
 

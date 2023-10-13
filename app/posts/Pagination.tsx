@@ -12,8 +12,8 @@ export const Pagination = ({
         <div
           className={`prose w-10 h-10 text-center ${
             parseInt(searchParams.page) === page + 1
-              ? "bg-gray-500 text-white"
-              : "hover:bg-gray-200"
+              ? "bg-gray-200 text-black"
+              : "hover:bg-gray-500 text-white"
           } rounded-md flex items-center justify-center`}
         >
           {page + 1}

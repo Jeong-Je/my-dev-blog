@@ -8,39 +8,20 @@ import {
   AiOutlineGithub,
   AiOutlineMail,
 } from "react-icons/ai";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Nav() {
   const [hamburger, setHamburger] = useState(false);
-  const [scrolling, setScrolling] = useState(false);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const handleScroll = () => {
-    if (window.scrollY > 0) {
-      setScrolling(true);
-    } else {
-      setScrolling(false);
-    }
-  };
 
   const handleHamburger = () => {
     setHamburger(!hamburger);
   };
 
-  const style = { color: "#4b5563" };
+  const style = { color: "#ffffff" };
   return (
     <>
       <nav
-        className={`backdrop-blur-md top-2 fixed left-0 right-0 flex items-center justify-center h-20 border-y transition-shadow duration-500  ${
-          scrolling ? "shadow-xl" : "shadow-none"
-        } `}
+        className={`backdrop-blur-md fixed left-0 right-0 flex items-center justify-center h-20 shadow-xl`}
       >
         <div className="max-w-[650px] flex justify-between items-center h-full w-full px-0 max-sm:mx-5">
           {/* 로고 */}
@@ -57,7 +38,7 @@ export default function Nav() {
 
           {/* 네비게이션 */}
           <div className="hidden sm:flex">
-            <ul className="hidden sm:flex">
+            <ul className="hidden sm:flex text-white">
               <li className="ml-10 uppercase ease-in duration-200 hover:text-2xl text-xl">
                 <Link href="/">Home</Link>
               </li>
@@ -86,7 +67,7 @@ export default function Nav() {
         >
           <div className="flex w-full items-center justify-end">
             <div onClick={handleHamburger} className="cursor-pointer">
-              <AiOutlineClose size={25} style={style} />
+              <AiOutlineClose size={25}/>
             </div>
           </div>
           <div className="flex-col py-4">
@@ -110,14 +91,12 @@ export default function Nav() {
               <AiOutlineMail
                 size={30}
                 className="cursor-pointer"
-                style={style}
               />
             </a>
             <a href="https://github.com/Jeong-Je" target="_blank">
               <AiOutlineGithub
                 size={30}
                 className="cursor-pointer"
-                style={style}
               />
             </a>
           </div>

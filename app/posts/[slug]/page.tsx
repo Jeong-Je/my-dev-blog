@@ -3,6 +3,7 @@ import { format, parseISO } from "date-fns";
 import { allPosts } from "contentlayer/generated";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import Link from "next/link";
+import ScrollIndicator from "@/app/components/ScrollIndicator";
 
 export const generateStaticParams = async () =>
   allPosts.map((post) => ({ slug: post._raw.flattenedPath }));
@@ -20,10 +21,13 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
   const MDXContent = useMDXComponent(post.body.code);
   return (
     <>
+      {/* 포스트 페이지에서만 ScrollIndicator 활성화 */}
+      <ScrollIndicator /> 
+      
       {/* 본문 (추후 구조 수정 필요) */}
       <div className="pt-24 mx-auto prose max-sm:mx-5">
         <div className="flex">
-          <h1 className="pt-5 pb-0 text-4xl font-bold text-black">
+          <h1 className="pt-5 pb-0 text-4xl font-bold text-white">
             {post.title}
             <br />
             <time dateTime={post.date} className="ml-2 text-sm text-zinc-400 ">

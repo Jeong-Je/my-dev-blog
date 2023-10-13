@@ -16,17 +16,23 @@ const config: Config = {
       typography: {
         DEFAULT: {
           css: {
+            // '*': {
+            //   color: 'white',
+            // },
             'blockquote p:first-of-type::before': {
               content: "''",
             },
             'blockquote' :{
-              'border-left': '0.25rem solid',
+              'border-left': '0.25rem solid #f87171',
+            },
+            'li': {
+              color: 'white',
             },
             'li::marker' :{
-              'color': 'black',
+              'color': 'white',
             },
             'a':{
-              'color': '#b91c1c',
+              'color': '#f87171',
               textDecoration: 'wavy underline',
               '&:hover': {
                 'color': 'red',
@@ -41,6 +47,7 @@ const config: Config = {
               color: '#f87171'
             },
             'h2':{
+              color: 'white',
               marginTop: '0',
             },
             'code::before': {
@@ -52,12 +59,25 @@ const config: Config = {
             'code': {
               'padding': '3px',
               'font-weight': '400',
-              'backgroundColor': '#d1d5db',
+              'backgroundColor': 'white',
               'borderRadius': "0.5rem",
-              'color': '#b91c1c',
+              'color': '#f87171',
             },
             'ul': {
 
+            },
+            'p': {
+              color: 'white',
+              '&>code':{ // 인용문 안에 있는 code 색 변경
+                color: '#f87171',
+              }
+            },
+            'cite':{
+              color : 'grey',
+              'font-size': '0.85rem',
+              'display': 'block',
+              'text-align': 'center',
+              'overflow-x': 'auto', // 모바일 버전에서 url이 너무 길 경우 대비
             }
           }
         }
