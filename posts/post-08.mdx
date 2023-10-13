@@ -8,7 +8,7 @@ tags:
 description: Socket.io를 이용한 서버와 클라이언트 연결하기
 ---
 
-![](/images/thumbnails/nestjs.png)
+![NestJS썸네일](/images/thumbnails/nestjs.png)
 
 > 토이 프로젝트로 커뮤니티 웹을 만들고 있는데 유저들끼리 채팅 기능을 추가하기 위해 `Socket.io`를 사용하려는데
 `NestJS`에서는 `Express`와 사용법이 조금 달라서 정리합니다.
@@ -30,8 +30,8 @@ Node에서는 웹 소켓을 구현하기 위한 두 라이브러리 [ws](https:/
 # NestJS에서 socket.io
 ## Gateways
 `NestJS`는 내장 기능으로 `socket.io`를 `Gateways`를 이용해서 지원합니다.
-![](https://docs.nestjs.com/assets/Gateways_1.png)
-<a align="center">https://docs.nestjs.com/websockets/gateways</a>
+![게이트웨이](https://docs.nestjs.com/assets/Gateways_1.png)
+<cite>https://docs.nestjs.com/websockets/gateways</cite>
 
 `Gateways`도 `providers`로 취급되므로 사용하는 `module`에 `providers`로 추가하여야 사용할 수 있습니다.
 ## 패키지 설치
@@ -199,3 +199,5 @@ postman에서 데이터를 보낼 때 Event 값을 `ClientToServer`로 설정하
 
 클라이언트는 `server.emit`로 인해 서버로부터 메세지를 받습니다.
 ![](/images/9.23/9.23.image8.png)
+
+***
