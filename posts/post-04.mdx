@@ -15,7 +15,7 @@ description: 너무 유명한 TCP/IP에 대해서 정리한 포스트입니다.
 서로 다른 컴퓨터가 통신을 할 때는 사전에 정해진 통신 규칙에 의해서 통신을 해야됩니다. 그 중 가장 기반이 되는
 프로토콜은 `TCP/IP`입니다.
 
-# TCP
+## TCP
 > TCP는 전송 제어 프로토콜(<small>Transmission Control Protocol</small>)의 약자로
 [OSI 7계층](https://ko.wikipedia.org/wiki/OSI_%EB%AA%A8%ED%98%95) 중 4계층인 `전송 계층`에
 속하여 한 기기에서 다른 기기로 데이터를 전송하는 것을 담담합니다.
@@ -26,7 +26,7 @@ TCP방식은 신뢰성에 중점을 두어 데이터를 주고받을 때 데이�
 UDP에 비해 속도가 느립니다. TCP는 이메일이나 채팅 등 높은 신뢰성을 요구하는 곳에서 주로 쓰이고 UDP는 동영상 스트리밍처럼 
 신뢰성보다 속도가 중요한 곳에서 주로 쓰입니다.
 
-# 3 Way Handshake
+### 3 Way Handshake
 TCP는 데이터의 정확한 전송을 위해서
 [3 Way Handshake](https://ko.wikipedia.org/wiki/%ED%95%B8%EB%93%9C%EC%85%B0%EC%9D%B4%ED%82%B9) 
 방식으로 통신을 합니다.
@@ -39,7 +39,7 @@ TCP는 데이터의 정확한 전송을 위해서
 각 단계에서의 A와 B의 `상태(State)`는 위 그림에서 확인할 수 있습니다. 이런 식으로 서로 데이터를 주고받을 준비가
 되었다고 확인 후 데이터 전송이 이루어지기에 높은 신뢰성을 얻을 수 있으나 속도는 UDP에 비해 느립니다.
 
-# IP
+## IP
 > [IP](https://ko.wikipedia.org/wiki/%EC%9D%B8%ED%84%B0%EB%84%B7_%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C)는 인터넷 프로토콜(Internet Protocol)의 약자로 OSI 7계층 중 3계층인 `네트워크 계층`에 위치한 프로토콜로
 컴퓨터끼리의 통신을 담당합니다.
 

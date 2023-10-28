@@ -87,7 +87,7 @@ export default makeSource({
 ```
 위 코드는 `Post` documentType을 만들어 주며, `flattenedPath`로 url field를 만들어 줍니다.
 document types의 field에 tag와 description 등을 추가할 수 있습니다.
-# MDX 파일 생성 및 렌더링
+## MDX 파일 생성 및 렌더링
 이제 MDX 파일을 만들어 봅시다. 프로젝트의 루트에 `posts` 폴더를 만든 후 안에 `test-01.mdx`파일을 만듭니다.
 
 ```
@@ -178,7 +178,7 @@ export default PostLayout;
 코드 작성을 마친 후 `http://localhost:3000/posts/test-01`로 접속하면
 만들었던 mdx파일을 가지고 잘 렌더링된 화면을 확인할 수 있습니다.
 ![](/images/8.30/8.30.image3.png)
-# 스타일링
+## 스타일링
 그런데 분명 mdx 태그에는 `#`을 이용해서 h1~h4 태그를 만들었는데 렌더링된 화면에서는 적용이 되어 있지 않습니다.
 `global.css`파일에 가서 아래 코드를 추가해주면
 

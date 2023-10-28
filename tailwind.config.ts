@@ -43,12 +43,11 @@ const config: Config = {
               width: "650px",
               borderRadius: "0.5rem",
             },
-            'h1':{
-              color: '#f87171'
+            'h3':{
+              color: '#fecaca'
             },
             'h2':{
-              color: 'white',
-              marginTop: '0',
+              color: '#f87171',
             },
             'code::before': {
               content: "''",
@@ -59,12 +58,15 @@ const config: Config = {
             'code': {
               'padding': '3px',
               'font-weight': '400',
-              'backgroundColor': 'white',
+              'backgroundColor': '#262626',
               'borderRadius': "0.5rem",
               'color': '#f87171',
             },
             'ul': {
 
+            },
+            'small': {
+              color: '#d4d4d4',
             },
             'p': {
               color: 'white',

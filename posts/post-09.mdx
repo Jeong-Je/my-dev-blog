@@ -10,7 +10,7 @@ description: 웹 개발하면서 필연적으로 만나게 되는 CORS 이슈에
 
 ***
 
-# CORS
+## CORS
 
 `CORS(Cross-Origin Resource Sharing)` 한국어로 직역하면 `교차 출처 리소스 공유` 라는 뜻으로
 서로 다른 출처를 가진 서비스에서 서로 자원을 공유한다는 개념입니다.
@@ -20,9 +20,9 @@ description: 웹 개발하면서 필연적으로 만나게 되는 CORS 이슈에
 `CORS`를 이해하기 위해서는 `Origin(출처)`에 대해서 알아야 됩니다.
 ***
 
-# Origin(출처)
+## Origin(출처)
 
-## URL 구조
+### URL 구조
 ![](/images/9.25/9.25.image1.png)
 `Origin(출처)`은 URL 구조에서 `Protocol, Host, Port`를 합친 것을 의미하고 여기서 `Port`는 
 생략이 가능합니다.
@@ -39,7 +39,7 @@ console.log(location.origin)
 
 ***
 
-# Same-Origin Policy
+## Same-Origin Policy
 
 보안상의 이유로, 브라우저에서는 교차 출처 HTTP 요청을 차단하고 있습니다.
 
@@ -60,21 +60,21 @@ console.log(location.origin)
 
 `SOP`의 기준을 완화하여 부분적으로 다른 출처의 리소스에 접근할 수 있도록 만든 체제가 `CORS`입니다.
 ***
-# CORS Prefilght
+## CORS Prefilght
 
 `CORS Prefilght(CORS 사전 요청)`은 본격적인 교차 출처 HTTP 요청 전에 서버 측에게 해당 요청의 메서드와 헤더에 대해 인식하고 있는지를 확인하는
 `CORS 요청` 입니다.
 
-## Simple Request
+### Simple Request
 `Simple Request(단순 요청)`의 경우에는 `CORS Prefilght`를 거치지 않습니다.
 
 단순 요청이 되기 위한 조건은 다음과 같습니다.
 
-- `GET`, `HEAD`, `POST` 요청만 가능합니다. <small>(여기에 속하지 않는 `DELETE`요청은 당연히 클라이언트가 요청 전에 `Prefilght`를 통해 서버가 `DELETE`을 허용 하는지 확인해야합니다.)</small>
+- `GET`, `HEAD`, `POST` 요청만 가능합니다. <small>(여기에 속하지 않는 DELETE 요청은 당연히 클라이언트가 요청 전에 Prefilght를 통해 서버가 DELETE을 허용 하는지 확인해야합니다.)</small>
 - `Content-Type` 헤더는 다음의 값들만 허용됩니다.
-    1. `application/x-www-form-urlencoded`
-    2. `multipart/form-data`
-    3. `text/plain`
+    1. application/x-www-form-urlencoded
+    2. multipart/form-data
+    3. text/plain
 - 요청에 `ReadableStream` 객체가 사용되지 않습니다.
 - 요청에 사용된 `XMLHttpRequestUpload` 객체에는 이벤트 리스너가 등록돼 있으면 안 됩니다. 이들은 `XMLHttpRequest.upload` 프로퍼티를 사용하여 접근합니다.
 
@@ -83,17 +83,17 @@ console.log(location.origin)
 그러나 위 조건도 역시 꽤 깐깐한 조건이고 그로 인해 우리가 `CORS` 오류를 자주 만나게 되는 겁니다.
 
 ***
-# CORS 오류 해결
+## CORS 오류 해결
 
 `교차 출처`이고 `SOP` 조건도 맞추지 못해 CORS 오류가 발생했어도 해결 방법이 존재합니다.
 
-## Access-Control-Allow-Origin
+### · Access-Control-Allow-Origin
 
 CORS 오류 해결에 대표적인 방법입니다. 서버에서 `Access-Control-Allow-Origin` 헤더에 CORS 정책에 위반되더라도 요청을 수락할 출처를 세팅하면 됩니다.
 
 이때 많이들 `*`을 사용하지만 이는 모든 출처에 대해 요청을 수락하겠다는 의미이고 보안상 문제점을 일으킬 수 있습니다. `CORS` 정책이 귀찮기는 하지만 보안상 이점이 있는 것은 확실합니다.
 
-## Proxy 서버 설정
+### · Proxy 서버 설정
 
 `Proxy` 설정은 주로 프론트엔드에서 사용되는 방법으로 프론트 서버와 백 서버가 분리된 경우
 브라우저에서 요청이 오면 백 서버로 가기 전에 프론트 서버를 거치게 됩니다.

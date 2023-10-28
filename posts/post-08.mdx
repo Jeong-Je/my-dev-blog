@@ -13,33 +13,33 @@ description: Socket.io를 이용한 서버와 클라이언트 연결하기
 > 토이 프로젝트로 커뮤니티 웹을 만들고 있는데 유저들끼리 채팅 기능을 추가하기 위해 `Socket.io`를 사용하려는데
 `NestJS`에서는 `Express`와 사용법이 조금 달라서 정리합니다.
 ***
-# WebSocket ?
+## WebSocket ?
 
-## HTTP의 단방향 통신
+### HTTP의 단방향 통신
 HTTP는 클라이언트가 서버에 요청을 보내고, 서버가 응답을 반환하는 단방향 통신을 기반으로 합니다.
 채팅과 같은 실시간 통신에서는 양방향 통신이 필요하고 이러한 양방향 통신을 구현하기 위해서는 
 HTTP와 OSI 모델의 같은 계층(7계층)에 위치한 계 `WebSocket`과 같은
 프로토콜이 필요합니다.
 
 
-## Node에서 Web Socket
+### Node에서 Web Socket
 Node에서는 웹 소켓을 구현하기 위한 두 라이브러리 [ws](https://www.npmjs.com/package/ws)와 [socket.io](https://socket.io/)가 존재하지만 `ws`보다는
 `socket.io`가 구현하기 편하고 더 다양한 기능<small>(room과 namespace 등)</small>을 지원하므로 
 저는 `socket.io`를 사용하려 합니다.
 ***
-# NestJS에서 socket.io
-## Gateways
+## NestJS에서 socket.io
+### Gateways
 `NestJS`는 내장 기능으로 `socket.io`를 `Gateways`를 이용해서 지원합니다.
 ![게이트웨이](https://docs.nestjs.com/assets/Gateways_1.png)
 <cite>https://docs.nestjs.com/websockets/gateways</cite>
 
 `Gateways`도 `providers`로 취급되므로 사용하는 `module`에 `providers`로 추가하여야 사용할 수 있습니다.
-## 패키지 설치
+### 패키지 설치
 ```
 npm i --save @nestjs/websockets @nestjs/platform-socket.io
 ```
 
-## 게이트웨이와 모듈 설치
+### 게이트웨이와 모듈 설치
 ```
 nest g gateway events
 nest g module events
@@ -60,7 +60,7 @@ import { EventsGateway } from './events.gateway';
 export class EventsModule {}
 ```
 
-# Gateway 코드
+## Gateway 코드
 ```ts
 import {
   MessageBody,
@@ -107,7 +107,7 @@ export class EventsGateway
   }
 }
 ```
-## @WebSocketGateWay
+### @WebSocketGateWay
 
 `@WebSocketGateWay`의 인자로 사용할 `포트`와 `namespace`을 설정할 수 있습니다.
 
@@ -119,7 +119,7 @@ export class EventsGateway
 위 코드는 80번 `포트`를 사용하고 `namespace`를 chat으로 설정한 코드입니다.
 
 
-## Lifecycle hooks
+### Lifecycle hooks
 
 `EventsGateway` 클래스를 생성할 때 3가지 인터페이스를 상속 받았습니다.
 
@@ -131,7 +131,7 @@ export class EventsGateway
 
 위 세 가지 메소드 구현은 `필수`적이고 구현하지 않으면 `EventsGateway` 클래스 생성 시 오류가 발생합니다.
 
-## afterInit
+### afterInit
 
 `afterInit` 메소드는 웹소켓 서버가 초기화된 후 호출되는 메소드입니다.
 이 메소드에서는 주로 웹소켓 서버와 관련된 초기 작업을 수행하거나 서버가 준비된 것을 로그로 남기는 작업 등을 할 수 있습니다.
@@ -142,7 +142,7 @@ export class EventsGateway
 
 서버 실행 시 위와 같이 로그가 정상적으로 남겨진 것을 확인할 수 있습니다.
 
-## handleConnection
+### handleConnection
 
 `handleConnection` 메소드는 클라이언트와 연결되었을 때 호출되는 메소드입니다.
 
@@ -159,7 +159,7 @@ postman에 socket.io 워크스페이스를 생성하고 요청 주소에 설정�
 `handleConnection` 메소드가 정상적으로 실행된 것을 로그로 확인할 수 있습니다.
 ![](/images/9.23/9.23.image3.png)
 
-## handleDisconnect
+### handleDisconnect
 `handleDisconnect` 메소드는 클라이언트와 연결이 끊겼을 때 실행되는 메소드입니다.
 ```ts
 handleDisconnect(@ConnectedSocket() socket: Socket) {
@@ -172,7 +172,7 @@ postman에서 연결을 끊으면
 
 `handleDisconnect` 메소드가 정상적으로 실행된 것을 로그로 확인할 수 있습니다.
 
-## @SubscribeMessage @MessageBody
+### @SubscribeMessage @MessageBody
 
 @SubscribeMessage 데코의 인자로 수신할 Event의 이름을 설정할 수 있고
 

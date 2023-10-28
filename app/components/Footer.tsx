@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   AiOutlineGithub,
   AiOutlineMail,
@@ -16,9 +17,9 @@ export default function Footer() {
         </span>
         <ul className="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
           <li className="md:ml-5">
-            <a href="/">
+            <Link href="/">
               <AiOutlineHome size={20} style={style} />
-            </a>
+            </Link>
           </li>
           <li className="ml-5">
             <a href="mailto:jeongjeson656@gmail.com">
