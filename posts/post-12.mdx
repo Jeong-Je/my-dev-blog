@@ -1,0 +1,68 @@
+---
+title: "[C++] 선택 정렬(Selection Sort)"
+date: 2023-10-28
+tags: 
+- C++
+- Algorithm
+description: 기본적인 정렬 알고리즘인 선택 정렬
+---
+
+> 가장 간단한 정렬 알고리즘인 선택 정렬
+***
+## 선택 정렬 특징
+- In-place(제 자리) 정렬 알고리즘으로 새로운 메모리 공간을 요구하지 않아 메모리 공간이 제약적인 상황에서 사용할 수 있음
+
+## 순서
+
+1. 주어진 리스트 중에 최소값을 찾는다.
+2. 그 값을 맨 앞에 위치한 값과 교체한다.
+3. 맨 처음 위치를 뺀 나머지 리스트를 같은 방법으로 교체한다.
+
+## C++ 코드
+```cpp
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void selectionSort(vector<int> &list, int n) {
+	int temp;
+	for (int i = 0; i < n - 1; i++) {
+		int indexMin = i;
+		for (int j = i + 1; j < n; j++) {
+			if (list[j] < list[indexMin])
+				indexMin = j;
+		}
+		//swap
+		temp = list[indexMin];
+		list[indexMin] = list[i];
+		list[i] = temp;
+	}
+}
+
+int main() {
+	int n;
+	cin >> n;
+	vector<int> list(n);
+	for (int i = 0; i < n; i++)
+		cin >> list[i];
+
+	selectionSort(list, n);
+
+	for (int i = 0; i < n; i++)
+		cout << list[i]<<" ";
+
+	return 0;
+}
+```
+정렬 되지 않은 13개의 값을 넣었을 때 결과
+![](/images/10.28/10.28.image1.png)
+<cite>정렬 되지 않은 13개의 값을 넣었을 때 결과</cite>
+## 시간 복잡도
+![복잡도 수식](https://wikimedia.org/api/rest_v1/media/math/render/svg/76b7e049488ed35f1c5e233473701c7c162d1551)
+
+
+![](/images/10.28/10.28.image2.gif)
+<cite>https://ssdragon.tistory.com/110</cite>
+
+***
