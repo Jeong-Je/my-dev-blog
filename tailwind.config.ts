@@ -43,6 +43,9 @@ const config: Config = {
               width: "650px",
               borderRadius: "0.5rem",
             },
+            'h1':{
+              color: '#ef4444',
+            },
             'h3':{
               color: '#fecaca'
             },

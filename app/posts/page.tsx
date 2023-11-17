@@ -20,17 +20,15 @@ export default function Home({ searchParams }: { searchParams: any }) {
   );
 
   // 태그카드에 사용될 태그 배열
-  let allTags: Array<string> = [];
+  let tags: Array<string> = [];
 
   allPostsData.map((post) => {
     if (post.tags) {
-      allTags.push(...post.tags); // 태그 배열을 추가
+      tags.push(...post.tags); // 태그 배열을 추가
     }
   });
 
-  //allTags의 중복 값들 제거
-  const tags = allTags.filter((v, i) => allTags.indexOf(v) === i);
-
+  tags = Array.from(new Set(tags)); // 중복 값 제거
 
   //태그에 맞는 게시글 불러오기
   if (searchParams.tag !== "ALL") {
