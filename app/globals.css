@@ -27,3 +27,8 @@ body{
 ::-webkit-scrollbar-thumb:hover {
     background: #6b7280;
 }
+
+::selection {
+    color: black;
+    background-color: yellow;
+}
