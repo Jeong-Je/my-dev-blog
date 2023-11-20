@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 
 const ScrollIndicator = () => {
   const [scroll, setScroll] = useState(0);
-  // const [rainbowColor, setRainbowColor] = useState("red");
 
   useEffect(() => {
     const handler = () => {
@@ -20,10 +19,6 @@ const ScrollIndicator = () => {
 
       // update state
       setScroll(scrollPercent - 0.1);
-
-      // Calculate the rainbow color based on scroll position
-      // const hue = (scrollPercent * 1.2) / 100; // Adjust the multiplier for desired speed
-      // setRainbowColor(`hsl(${hue * 360}, 100%, 50%)`);
     };
 
     // add event listener
@@ -34,15 +29,11 @@ const ScrollIndicator = () => {
     
   }, [scroll]);
 
-  // const rainbowGradient = {
-  //   background: `linear-gradient(to right, ${rainbowColor}, violet)`,
-  // };
-
   return (
-    <div className="bg-sky-400 fixed h-1 w-screen">
+    <div className="fixed h-1 w-screen">
       <div
-        className="h-full bg-sky-900"
-        style={{ width: scroll + "%" }} //style={{ width: scroll + "%" }, ...rainbowGradient}
+        className="h-full bg-amber-300"
+        style={{ width: scroll + "%" }} 
       ></div>
     </div>
   );

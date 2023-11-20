@@ -63,7 +63,6 @@ const config: Config = {
               'font-weight': '400',
               'backgroundColor': '#262626',
               'borderRadius': "0.5rem",
-              'color': '#f87171',
             },
             'ul': {
 
@@ -72,7 +71,7 @@ const config: Config = {
               color: '#d4d4d4',
             },
             'p': {
-              color: 'white',
+              color: '#EBEBEB',
               '&>code':{ // 인용문 안에 있는 code 색 변경
                 color: '#f87171',
               }

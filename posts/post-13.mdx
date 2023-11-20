@@ -106,7 +106,7 @@ void merge(vector<int>& list, int left, int mid, int right) {
 
 void mergeSort(vector<int>& list, int left, int right) {
 	if (left < right) {
-		int mid = left + (right - left) / 2;
+		int mid = (left + right) / 2;
 		mergeSort(list, left, mid);
 		mergeSort(list, mid + 1, right);
 		merge(list, left, mid, right);

@@ -4,7 +4,7 @@
 
 body{
     /* background-color: #f3f4f6; */
-    background-color: #232E3C;
+    background-color: #2F3437;
 }
 
 /* width */
@@ -29,6 +29,5 @@ body{
 }
 
 ::selection {
-    color: black;
-    background-color: yellow;
+    background-color: #2F5768;
 }

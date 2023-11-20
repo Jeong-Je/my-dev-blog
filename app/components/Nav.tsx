@@ -20,9 +20,8 @@ export default function Nav() {
   const style = { color: "#ffffff" };
   return (
     <>
-      <div className="bg-sky-400 fixed h-2 w-full"></div>
       <nav
-        className={`backdrop-blur-md fixed left-0 right-0 flex items-center justify-center h-20 shadow-xl`}
+        className={`h-20 backdrop-blur-md fixed left-0 right-0 flex items-center justify-center shadow-xl`}
       >
         <div className="max-w-[650px] flex justify-between items-center h-full w-full px-0 max-sm:mx-5">
           {/* 로고 */}
