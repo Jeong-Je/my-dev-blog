@@ -63,6 +63,7 @@ const config: Config = {
               'font-weight': '400',
               'backgroundColor': '#262626',
               'borderRadius': "0.5rem",
+              'color': '#f87171'
             },
             'ul': {
 
