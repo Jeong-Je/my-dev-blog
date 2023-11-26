@@ -35,7 +35,7 @@ const config: Config = {
               'color': '#f87171',
               textDecoration: 'wavy underline',
               '&:hover': {
-                'color': 'red',
+                'color': '#fcd34d',
               }
             },
             'img': {
