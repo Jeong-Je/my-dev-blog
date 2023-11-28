@@ -12,29 +12,15 @@ body{
 }
 
 /* width */
-::-webkit-scrollbar {
+.tagCardMobile::-webkit-scrollbar {
     width: 10px;
     height: 4px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-    background: #e5e7eb;
-}
-
-/* Handle */
 ::-webkit-scrollbar-thumb {
     background: #9ca3af;
 }
 
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #6b7280;
-}
-
-::selection {
-    background-color: #2F5768;
-}
 
 .tagCardPc::-webkit-scrollbar {
     width:4px;
