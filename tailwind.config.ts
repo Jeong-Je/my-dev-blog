@@ -16,9 +16,7 @@ const config: Config = {
       typography: {
         DEFAULT: {
           css: {
-            // '*': {
-            //   color: 'white',
-            // },
+            maxWidth: '940px',
             'blockquote p:first-of-type::before': {
               content: "''",
             },

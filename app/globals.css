@@ -35,3 +35,28 @@ body{
 ::selection {
     background-color: #2F5768;
 }
+
+.tagCardPc::-webkit-scrollbar {
+    width:4px;
+    height: 4px;
+}
+
+.tagCardPc::-webkit-scrollbar-thumb {
+    background: #fcd34d;
+}
+
+@media (max-width: 940px) {
+    .tagCardPc {
+        display: none;
+    }
+}
+
+
+@media (min-width: 940px) {
+    .tagCardMobile {
+        display: none;
+    }
+    .main {
+        padding-top: 96px;
+    }
+}

@@ -1,8 +1,9 @@
 import { compareDesc } from "date-fns";
 import { allPosts } from "contentlayer/generated";
-import { TagCard } from "./TagCard";
+import { TagCardPc } from "./TagCard/pc";
 import { PostCard } from "./PostCard";
 import { Pagination } from "./Pagination";
+import { TagCardMobile } from "./TagCard/mobile";
 
 export default function Home({ searchParams }: { searchParams: any }) {
   // console.log('1',searchParams);
@@ -57,29 +58,36 @@ export default function Home({ searchParams }: { searchParams: any }) {
 
   return (
     <>
-      <div className="pt-32 mx-auto">
-        {/* 태그 카드 컴포넌트 */}
-        <TagCard searchParams={searchParams} tags={tags} />
-        <div className="prose mx-auto px-5 max-sm:mx-5">
-          {searchParams.tag !== "ALL" ? (
-            <h3 style={{color: "white"}}>
-              📝 {searchParams.tag} ({postCount})
-            </h3>
-          ) : (
-            <h3 style={{color: "white"}}>📝 All Posts ({postCount})</h3>
-          )}
+      <div className="prose prose-a:no-underline mx-auto">
+        <TagCardMobile searchParams={searchParams} tags={tags}/>
+        <div className="pt-24 w-32 h-6 fixed">
+        <TagCardPc searchParams={searchParams} tags={tags} />
         </div>
+        <div className="main mx-auto" style={{ width: "640px" }}>
+          {/* 태그 카드 컴포넌트 */}
+          <div>
+            <div className="prose px-5">
+              {searchParams.tag !== "ALL" ? (
+                <h3 style={{ color: "white" }}>
+                  📝 {searchParams.tag} ({postCount})
+                </h3>
+              ) : (
+                <h3 style={{ color: "white" }}>📝 All Posts ({postCount})</h3>
+              )}
+            </div>
 
-        {/* 게시글 컴포넌트 */}
-        {allPostsData.map((post, idx) => (
-          <PostCard key={idx} {...post} />
-        ))}
+            {/* 게시글 컴포넌트 */}
+            {allPostsData.map((post, idx) => (
+              <PostCard key={idx} {...post} />
+            ))}
 
-        {/* 페이지 네이션 컴포넌트 */}
-        <div className="flex justify-center">
-          {pageIntoArray.map((page, idx) => (
-            <Pagination key={idx} searchParams={searchParams} page={page} />
-          ))}
+            {/* 페이지 네이션 컴포넌트 */}
+            <div className="flex justify-center">
+              {pageIntoArray.map((page, idx) => (
+                <Pagination key={idx} searchParams={searchParams} page={page} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </>

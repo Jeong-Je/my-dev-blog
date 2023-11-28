@@ -25,7 +25,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
       <ScrollIndicator /> 
       
       {/* 본문 (추후 구조 수정 필요) */}
-      <div className="pt-24 mx-auto prose max-sm:mx-5">
+      <div className="pt-24 mx-auto prose max-sm:mx-5" style={{width: '640px'}}>
         <div className="flex">
           <h1 className="pt-5 pb-0 text-4xl font-bold">
             {post.title}
