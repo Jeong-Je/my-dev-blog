@@ -10,7 +10,6 @@
 - Deploy
   - Vercel
 
-***
 > npm run dev
 
-![이미지](/public/README.png)
+![이미지](/public/screenshot.png)
