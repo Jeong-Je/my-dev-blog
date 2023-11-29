@@ -36,13 +36,3 @@ body{
         display: none;
     }
 }
-
-
-@media (min-width: 940px) {
-    .tagCardMobile {
-        display: none;
-    }
-    .main {
-        padding-top: 96px;
-    }
-}

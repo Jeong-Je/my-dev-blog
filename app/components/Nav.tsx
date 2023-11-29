@@ -45,6 +45,9 @@ export default function Nav() {
               <li className="ml-10 mr-1 uppercase ease-in duration-200 hover:text-2xl text-xl">
                 <Link href="/posts">Posts</Link>
               </li>
+              <li className="ml-10 mr-1 uppercase ease-in duration-200 hover:text-2xl text-xl">
+                <Link href="/tags">Tags</Link>
+              </li>
             </ul>
           </div>
 
@@ -65,12 +68,12 @@ export default function Nav() {
               : "fixed left-[100%] top-0 p-10 ease-in duration-500"
           }
         >
-          <div className="flex w-full items-center justify-end">
+          <div className="z-1 flex w-full items-center justify-end">
             <div onClick={handleHamburger} className="cursor-pointer">
               <AiOutlineClose size={25} />
             </div>
           </div>
-          <div className="flex-col py-4">
+          <div className="py-4">
             <ul>
               <li
                 onClick={() => setHamburger(false)}
@@ -83,6 +86,12 @@ export default function Nav() {
                 className="py-4 cursor-pointer"
               >
                 <Link href="/posts">Posts</Link>
+              </li>
+              <li
+                onClick={() => setHamburger(false)}
+                className="py-4 cursor-pointer"
+              >
+                <Link href="/tags">Tags</Link>
               </li>
             </ul>
           </div>

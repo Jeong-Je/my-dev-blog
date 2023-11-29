@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="prose pt-32 mx-auto max-sm:mx-5" style={{width: '640px'}}>
+    <div className="prose pt-32 mx-auto max-sm:mx-5">
       <div className="rounded-lg p-4 bg-gray-200">
         ℹ️ 이 곳은 제가 공부한 내용을 정리하고 기록하는 공간입니다.🚀✨
       </div>

@@ -58,21 +58,26 @@ export default function Home({ searchParams }: { searchParams: any }) {
 
   return (
     <>
-      <div className="prose prose-a:no-underline mx-auto">
-        <TagCardMobile searchParams={searchParams} tags={tags}/>
-        <div className="pt-24 w-32 h-6 fixed">
-        <TagCardPc searchParams={searchParams} tags={tags} />
+      <div className="prose max-w-[940px] prose-a:no-underline mx-auto">
+        {/* 상단 태그 카드 */}
+        <div className="overflow-auto flex">
+          <TagCardMobile searchParams={searchParams} tags={tags} />
         </div>
-        <div className="main mx-auto" style={{ width: "640px" }}>
-          {/* 태그 카드 컴포넌트 */}
+
+        {/* 사이드 태그 카드 */}
+        <div className="tagCardPc pt-24 w-32 h-6 fixed">
+          <TagCardPc searchParams={searchParams} tags={tags} />
+        </div>
+
+        <div className="max-w-[640px] mx-auto">
           <div>
-            <div className="prose px-5">
+            <div className="px-5" style={{color:'white'}}>
               {searchParams.tag !== "ALL" ? (
-                <h3 style={{ color: "white" }}>
+                <h3>
                   📝 {searchParams.tag} ({postCount})
                 </h3>
               ) : (
-                <h3 style={{ color: "white" }}>📝 All Posts ({postCount})</h3>
+                <h3>📝 All Posts ({postCount})</h3>
               )}
             </div>
 

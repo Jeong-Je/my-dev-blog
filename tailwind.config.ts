@@ -16,9 +16,12 @@ const config: Config = {
       typography: {
         DEFAULT: {
           css: {
-            maxWidth: '940px',
+            'maxWidth': '640px',
             'blockquote p:first-of-type::before': {
               content: "''",
+            },
+            '.w-640':{
+              maxWidth: '640px'
             },
             'blockquote' :{
               'border-left': '0.25rem solid #f87171',
