@@ -8,9 +8,11 @@ description: JWT의 리프레시 토큰과 액세스 토큰
 ---
 
 ![JWT썸네일](/images/thumbnails/jwt.png)
+> JWT의 특성상 토큰 탈취는 매우 조심해야 되므로 토큰에 만료 기간을 주어야 합니다. 그러나 Refresh Token 없이
+Access Token만을 사용하면 사이트 이용 도중에 예를들어 갑자기 로그아웃이 되버리는 상황이 발생할 수 있으므로 Refresh Token는 Access Token 만료 시 재발급할 때 이용됩니다.
  
  ## Refresh Token & Access Token
- - 투 토큰 모두 JWT 기반입니다.
+ - 두 토큰 모두 JWT 기반입니다.
  - `Access Token`은 API 요청을 할 때 검증용 토큰으로 사용이 됩니다. 즉, 인증이 필요한 API를 사용할때는 꼭 액세스 토큰을
  Header에 넣어서 보내야 합니다.
  - `Refresh Token`은 `Access Token`을 추가로 발급할 때 사용이 됩니다.
@@ -19,7 +21,7 @@ description: JWT의 리프레시 토큰과 액세스 토큰
  방지할 수 있습니다.
  - 상대적으로 노출이 적은 `Refresh Token`의 경우 `Access Token`을 새로 발급받을 때만 사용이 되므로 탈취 가능성이 상대적으로 적습니다.
 - `Refresh Token`을 발급받으면 기존의 `Access Token`은 사용 불가능
-
+***
 ## 토큰 발급 과정
 
 1. 클라이언트에서 `"username:password"` 형태의 값을 base64로 인코딩한 후 authorization 헤더에 `"Basic $token"` 형태로 전송
@@ -44,7 +46,9 @@ authorization: "Bearer $accessToken"
 2. API 서버에서 Access Token 검증 후
 3. DB에 데이터 요청후 응답을 받음
 4. 응답을 클라이언트에 전송
-
+***
 ## 최종 로직
 Access Token 토큰 사용 과정 사이에 Refresh Token 사용 과정이 껴있는 느낌
 ![FlowChart](/images/01.06/FlowChart.svg)
+
+***

@@ -73,7 +73,7 @@ const config: Config = {
               color: '#d4d4d4',
             },
             'p': {
-              color: '#EBEBEB',
+              color: '#FFFFFF',
               '&>code':{ // 인용문 안에 있는 code 색 변경
                 color: '#f87171',
               }
