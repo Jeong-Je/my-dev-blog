@@ -23,6 +23,8 @@ export default function Home({ searchParams }: { searchParams: any }) {
   // 태그카드에 사용될 태그 배열
   let tags: Array<string> = [];
 
+  tags.push('ALL');
+
   allPostsData.map((post) => {
     if (post.tags) {
       tags.push(...post.tags); // 태그 배열을 추가

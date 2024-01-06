@@ -7,10 +7,6 @@ export const TagCardMobile = ({
   searchParams: any;
   tags: Array<string>;
 }) => {
-  if (searchParams.tag) {
-    tags.unshift("ALL");
-  }
-  // console.log(tags);
   return (
     <>
       <div className="tagCardMobile max-w-[640px] pt-32 flex overflow-auto mx-auto pb-3 max-sm:mx-5">
