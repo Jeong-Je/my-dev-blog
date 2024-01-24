@@ -8,7 +8,7 @@ export default function Home() {
       <h3>🖥️ 주요 관심사항</h3>
       <ul>
         <li>Web (mainly backend)</li>
-        <li>Windows System Programming</li>
+        <li>System Programming</li>
         <li>Network</li>
         <li>Database</li>
       </ul>
