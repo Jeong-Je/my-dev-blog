@@ -1,0 +1,135 @@
+---
+title: "[GIT] 명령어 정리 - ②"
+date: 2024-01-25
+tags: 
+- git
+- github
+description: branch 와 다양한 merge 방법 그리고 충돌에 대해서
+---
+> 브랜치의 필요성과 생성법 그리고 다양한 merge 방법에 대해서 정리
+## Branch
+> 원본 파일에서 작업하는게 왠지 불안하다? 그럴때 브런치를 사용합니다.
+```
+git branch 브랜치이름
+```
+위 명령어를 통해서 프로젝트 복사본인 브랜치를 만들 수 있습니다.
+<br />
+```
+git switch 브랜치이름
+```
+브랜치를 생성했으면 `switch` 명령어로 생성한 새 브랜치로 이동한 후 
+
+코드 작업을 하면 됩니다. 
+
+여기서 작업한 내용은 원본(main branch)에는 영향을 미치지 않습니다.
+***
+## Merge
+
+> 새 브랜치에서 작업한 내용이 마음에 든다? main 브랜치와 합치면 됩니다.
+
+브랜치에서 작업한 코드가 잘 작동한다면 
+
+main(혹은 master) 브랜치와 합치면 되는데 이 작업을 `merge`라고 부릅니다.
+
+```git
+git switch main
+git merge 브랜치명
+```
+1. 먼저 main(혹은 master) 브랜치로 이동한 후
+2. git merge 브랜치명 명령어로 main과 합치면 됩니다.
+
+## Merge시 충돌
+> 병합 과정에서 자주 발생하는 충돌 문제
+
+main 브랜치와 다른 브랜치에서 같은 파일, 같은 줄을 수정했었다면
+
+merge 과정에서 어느 브랜치의 변경 사항을 적용할 지 몰라서 충돌이 발생합니다.
+![merge충돌예시](https://github.com/Jeong-Je/my-tech-blog/assets/131790445/3253c996-43b2-49fa-a91b-b02655432b18)
+
+위는 main 브랜치와 다른 브랜치에서 같은 라인을 수정했을 때 충돌이 발생한 모습입니다.
+
+이럴때는 상단의 Accept Current Change 버튼이 있는 곳에서 어떤 걸 적용할 지 선택하면 됩니다.
+
+브랜치는 협업에서도 많이 사용됩니다.
+***
+## 브랜치의 종류들
+> 상황에 따라 다르게 발생하는 병합과정
+
+### 3-way merge
+> 가장 일반적은 merge 방법
+
+![3-way-merge](https://github.com/Jeong-Je/my-tech-blog/assets/131790445/37e45cb7-83ce-46a1-bb25-0921e1c99fcc)
+<cite>https://codingapple.com/course/git-and-github/</cite>
+
+브랜치에 각각 신규 `commit`이 1회 이상 있는 경우에서
+
+merge 명령을 내리면 두 브랜치의 코드를 합쳐서 새로운 commit을 자동으로 만들어 주는데
+
+이를 `3-way commit`이라고 부릅니다.
+<br />
+### fast-forward merge
+![fast-forward-merge](https://github.com/Jeong-Je/my-tech-blog/assets/131790445/c146f2ed-0e04-4ac4-baa1-1ec89fa21ad5)
+<cite>https://codingapple.com/course/git-and-github/</cite>
+
+main 브랜치에는 신규 commit이 없고
+
+새 브랜치에서만 신규 commit이 있는 경우에서 merge를 하는 경우는
+
+새 브랜치를 이제 main branch라고 칭하게 됩니다. 
+
+이를 `fast-forward  merge`라고 합니다.
+
+<br />
+
+### rebase and merge
+![rebase-and-merge](https://github.com/Jeong-Je/my-tech-blog/assets/131790445/5deafb8f-fbb0-4c60-bbd8-13c8bb6bc766)
+<cite>https://codingapple.com/course/git-and-github/</cite>
+
+`rebase`는 브랜치의 시작점을 다른 commit으로 옮겨주는 행위입니다.
+
+마치 브랜치를 새로 안 만들고 main에서 처음부터 작업했던 것 같은 느낌을 줍니다. 
+
+```
+git switch 새로운브랜치
+git rebase main
+
+git switch main
+git merge 새로운브랜치
+```
+위 순서로 명령어를 입력하면 `rebase`를 할 수 있습니다.
+
+main말고 다른 브랜치끼리도 가능합니다.
+
+좋은 방법 같지만 단점으로는 충돌 이슈가 자주 발생한다는 것입니다.
+
+<br />
+
+### squash and merge
+![squash-and-merge](https://github.com/Jeong-Je/my-tech-blog/assets/131790445/71d9e18f-124d-47bc-b4de-65df266eb443)
+<cite>https://codingapple.com/course/git-and-github/</cite>
+
+많은 브랜치들을 모두 3-way merge 해버리면 git log 출력 시 너무 복잡해질 수 있습니다.
+
+복잡해지는 것이 싫으면 `rebase`와 `squash`를 사용하면 됩니다.
+
+`squash`는 새 브랜치에 있던 코드 변경사항들이 main 브랜치로 순간이동한 것처럼 적용됩니다.
+
+```
+git switch main
+git merge --squash 브랜치명
+git commit -m "커밋메세지"
+```
+merge할 때 --squash 옵션을 추가 해주면 됩니다.
+
+자주 쓰일 것 같습니다.
+***
+## 브랜치 삭제법
+> merge가 완료된 브랜치 삭제는
+```
+git branch -d 브랜치명
+```
+<br />
+> merge를 안한 브랜치 삭제는
+```
+git branch -D 브랜치명
+```
