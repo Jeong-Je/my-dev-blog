@@ -16,7 +16,7 @@ export const TagCardPc = ({
       <div className="tagCardPc flex flex-col overflow-auto h-[266px]">
         {tags.map((tag: any, idx: any) => (
           <Link
-            href={tag === "C++" ? `/?tag=C%2B%2B` : `/posts/?tag=${tag}`}
+            href={tag === "C++" ? `/?tag=C%2B%2B` : `/?tag=${tag}`}
             key={idx}
           >
             <button

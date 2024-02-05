@@ -36,7 +36,7 @@ const PostLayout = ({ params }: { params: { slug: string } }) => {
             </time>
             <div>
               {tags?.map((tag, idx) => (
-                <Link href={tag === "C++" ? `/posts/?tag=C%2B%2B` : `/posts/?tag=${tag}`} key={idx}>
+                <Link href={tag === "C++" ? `/?tag=C%2B%2B` : `/?tag=${tag}`} key={idx}>
                   <button className="rounded-full bg-gray-200 hover:bg-gray-300 text-black text-sm px-4 py-1 mr-3">
                     {tag}
                   </button>
