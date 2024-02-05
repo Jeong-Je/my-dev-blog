@@ -30,7 +30,7 @@ Node에서는 웹 소켓을 구현하기 위한 두 라이브러리 [ws](https:/
 ## NestJS에서 socket.io
 ### Gateways
 `NestJS`는 내장 기능으로 `socket.io`를 `Gateways`를 이용해서 지원합니다.
-![게이트웨이](https://docs.nestjs.com/assets/Gateways_1.png)
+![게이트웨이](/images/post-08/Gateways_1.png)
 <cite>https://docs.nestjs.com/websockets/gateways</cite>
 
 `Gateways`도 `providers`로 취급되므로 사용하는 `module`에 `providers`로 추가하여야 사용할 수 있습니다.
@@ -138,7 +138,7 @@ export class EventsGateway
 
 위 코드에서는 클라이언트와 연결되기 전에 `EventsGateway` 클래스의 `생성자 함수`가 실행될 때 로그를 남기고
 `afterInit` 메소드가 실행될 때 로그를 남기도록 작성했습니다.
-![](/images/9.23/9.23.image1.png)
+![](/images/post-08/9.23.image1.png)
 
 서버 실행 시 위와 같이 로그가 정상적으로 남겨진 것을 확인할 수 있습니다.
 
@@ -154,10 +154,10 @@ handleConnection(@ConnectedSocket() socket) {
 클라이언트와 연결되면 클라이언트를 식별할 값과 현재 방을 로그로 남기도록 되어 있습니다.
 
 postman에 socket.io 워크스페이스를 생성하고 요청 주소에 설정한 포트와 namespace를 넣고 연결을 누르면
-![](/images/9.23/9.23.image2.png)
+![](/images/post-08/9.23.image2.png)
 
 `handleConnection` 메소드가 정상적으로 실행된 것을 로그로 확인할 수 있습니다.
-![](/images/9.23/9.23.image3.png)
+![](/images/post-08/9.23.image3.png)
 
 ### handleDisconnect
 `handleDisconnect` 메소드는 클라이언트와 연결이 끊겼을 때 실행되는 메소드입니다.
@@ -168,7 +168,7 @@ handleDisconnect(@ConnectedSocket() socket: Socket) {
 ```
 
 postman에서 연결을 끊으면
-![](/images/9.23/9.23.image4.png)
+![](/images/post-08/9.23.image4.png)
 
 `handleDisconnect` 메소드가 정상적으로 실행된 것을 로그로 확인할 수 있습니다.
 
@@ -190,14 +190,14 @@ handleMessage(@MessageBody() data: string) {
 클라이언트에서 온 데이터를 로그로 남기고 `server.emit` 함수로 클라이언트로 데이터를 보낼 수 있습니다.
 
 postman에서 데이터를 보낼 때 Event 값을 `ClientToServer`로 설정하고
-![](/images/9.23/9.23.image5.png)
+![](/images/post-08/9.23.image5.png)
 수신할 이벤트를 `ServerToClient`로 설정하고
-![](/images/9.23/9.23.image6.png)
+![](/images/post-08/9.23.image6.png)
 
 메세지를 보내면 클라이언트의 메세지가 서버 로그에 남고
-![](/images/9.23/9.23.image7.png)
+![](/images/post-08/9.23.image7.png)
 
 클라이언트는 `server.emit`로 인해 서버로부터 메세지를 받습니다.
-![](/images/9.23/9.23.image8.png)
+![](/images/post-08/9.23.image8.png)
 
 ***
