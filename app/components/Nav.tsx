@@ -21,7 +21,7 @@ export default function Nav() {
   return (
     <>
       <nav
-        className={`h-20 backdrop-blur-md fixed left-0 right-0 flex items-center justify-center shadow-xl`}
+        className={`h-20 backdrop-blur-md fixed left-0 right-0 flex justify-center shadow-xl`}
       >
         <div className="max-w-[650px] flex justify-between items-center h-full w-full px-0 max-sm:mx-5">
           {/* 로고 */}
@@ -39,11 +39,8 @@ export default function Nav() {
           {/* 네비게이션 */}
           <div className="hidden sm:flex">
             <ul className="hidden sm:flex text-white">
-              <li className="ml-10 uppercase ease-in duration-200 hover:text-2xl text-xl">
-                <Link href="/">Home</Link>
-              </li>
               <li className="ml-10 mr-1 uppercase ease-in duration-200 hover:text-2xl text-xl">
-                <Link href="/posts">Posts</Link>
+                <Link href="/">Posts</Link>
               </li>
               <li className="ml-10 mr-1 uppercase ease-in duration-200 hover:text-2xl text-xl">
                 <Link href="/tags">Tags</Link>
@@ -79,13 +76,7 @@ export default function Nav() {
                 onClick={() => setHamburger(false)}
                 className="py-4 cursor-pointer"
               >
-                <Link href="/">Home</Link>
-              </li>
-              <li
-                onClick={() => setHamburger(false)}
-                className="py-4 cursor-pointer"
-              >
-                <Link href="/posts">Posts</Link>
+                <Link href="/">Posts</Link>
               </li>
               <li
                 onClick={() => setHamburger(false)}

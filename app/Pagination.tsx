@@ -8,7 +8,7 @@ export const Pagination = ({
     page: number;
   }) => {
     return (
-      <Link href={`/posts?tag=${searchParams.tag}&page=${page + 1}`}>
+      <Link href={`/?tag=${searchParams.tag}&page=${page + 1}`}>
         <div
           className={`prose w-10 h-10 text-center ${
             parseInt(searchParams.page) === page + 1

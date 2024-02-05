@@ -17,10 +17,9 @@ body{
     height: 4px;
 }
 
-::-webkit-scrollbar-thumb {
-    background: #9ca3af;
+.tagCardMobile::-webkit-scrollbar-thumb {
+    background: #fcd34d;
 }
-
 
 .tagCardPc::-webkit-scrollbar {
     width:4px;
@@ -52,7 +51,7 @@ code {
     width: 1rem;
     margin-right: 2rem;
     text-align: right;
-    color: gray;
+    color: #fcd34d;
   }
    
   code[data-line-numbers-max-digits='2'] > [data-line]::before {

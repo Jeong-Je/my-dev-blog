@@ -41,7 +41,6 @@ const config: Config = {
             },
             'img': {
               margin: '24px 0px',
-              width: "650px",
               borderRadius: "0.5rem",
             },
             'h1':{
