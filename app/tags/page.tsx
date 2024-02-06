@@ -33,7 +33,7 @@ export default function Home() {
       </h1>
       <div className="ml-3 flex flex-wrap prose prose-a:no-underline">
         {Object.keys(tags).map((tag, idx) => (
-          <Link key={idx} className="cursor-pointer mr-3" href={tag==="C++"?'/posts?tag=C%2B%2B' : `/posts?tag=${tag}`}>
+          <Link key={idx} className="cursor-pointer mr-3" href={tag==="C++"?'/?tag=C%2B%2B' : `/?tag=${tag}`}>
             {tag}({tags[tag]}){" "}
           </Link>
         ))}
