@@ -24,7 +24,7 @@ const config: Config = {
               maxWidth: '640px'
             },
             'blockquote' :{
-              'border-left': '0.25rem solid #f87171',
+              'border-left': '0.25rem solid #fcd34d',
             },
             'li': {
               color: 'white',
@@ -33,7 +33,7 @@ const config: Config = {
               'color': 'white',
             },
             'a':{
-              'color': '#f87171',
+              'color': '#0072F5',
               textDecoration: 'wavy underline',
               '&:hover': {
                 'color': '#fcd34d',
@@ -44,13 +44,15 @@ const config: Config = {
               borderRadius: "0.5rem",
             },
             'h1':{
-              color: '#ef4444',
+              color: '#FFFFFFE6',
             },
             'h3':{
-              color: '#fecaca'
+              color: '#fde68a',
             },
             'h2':{
-              color: '#f87171',
+              margin: '32px 0 12px',
+              fontSize: '28px',
+              color: '#fcd34d',
             },
             'code::before': {
               content: "''",

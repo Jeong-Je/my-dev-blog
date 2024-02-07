@@ -59,7 +59,6 @@ export default function Home({ searchParams }: { searchParams: any }) {
   let pageIntoArray = Array.from(Array(pagination).keys());
   return (
     <>
-      <hr />
       <div className="prose max-w-[940px] prose-a:no-underline mx-auto">
         {/* 상단 태그 카드 */}
         <div className="overflow-auto flex">
