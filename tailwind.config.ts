@@ -44,7 +44,7 @@ const config: Config = {
               borderRadius: "0.5rem",
             },
             'h1':{
-              color: '#FFFFFFE6',
+              color: '#fbbf24',
             },
             'h3':{
               color: '#fde68a',
